@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS Country (
 	country_name VARCHAR(100) NOT NULL COMMENT 'Название страны',
 	country_code VARCHAR(3)   NOT NULL COMMENT 'Код страны по ОКСМ'
 );
-COMMENT ON TABLE User IS 'Страна гражданства';
+COMMENT ON TABLE Country IS 'Страна гражданства';
 
 CREATE TABLE IF NOT EXISTS DocType (
 	id       INTEGER               COMMENT 'Уникальный идентификатор вида документа' PRIMARY KEY AUTO_INCREMENT,
@@ -50,16 +50,16 @@ CREATE TABLE IF NOT EXISTS DocType (
 	doc_name VARCHAR(150) NOT NULL COMMENT 'Название документа',
 	doc_code VARCHAR(2)   NOT NULL COMMENT 'Код вида документа'
 );
-COMMENT ON TABLE User IS 'Виды документов сотрудников';
+COMMENT ON TABLE DocType IS 'Виды документов сотрудников';
 
 CREATE TABLE IF NOT EXISTS Docs (
 	id         INTEGER              COMMENT 'Уникальный идентификатор документа, удостоверяющего личность' PRIMARY KEY AUTO_INCREMENT,
 	version    INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
 	doctype_id INTEGER     NOT NULL COMMENT 'Уникальный идентификатор вида документа',
 	doc_number VARCHAR(50) NOT NULL COMMENT 'Номер индивидуального документа',
-    doc_date   VARCHAR(50) NOT NULL COMMENT 'Дата выдачи индивидуального документа',
+    doc_date   DATE        NOT NULL COMMENT 'Дата выдачи индивидуального документа',
 );
-COMMENT ON TABLE User IS 'Документы, удостоверяющие личность сотрудника';
+COMMENT ON TABLE Docs IS 'Документы, удостоверяющие личность сотрудника';
 
 
 ALTER TABLE Office 	ADD FOREIGN KEY (org_id)         REFERENCES Organization(id);
