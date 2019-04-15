@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Doc_type (
 	name VARCHAR(150) NOT NULL COMMENT 'Название документа',
 	code VARCHAR(2)   NOT NULL COMMENT 'Код вида документа'
 );
-COMMENT ON TABLE DocType IS 'Виды документов сотрудников';
+COMMENT ON TABLE Doc_type IS 'Виды документов сотрудников';
 
 CREATE TABLE IF NOT EXISTS Document (
 	id         INTEGER              COMMENT 'Уникальный идентификатор документа, удостоверяющего личность' PRIMARY KEY AUTO_INCREMENT,
