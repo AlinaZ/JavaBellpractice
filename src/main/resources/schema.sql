@@ -70,7 +70,7 @@ ALTER TABLE User 	 ADD FOREIGN KEY (doc_id)         REFERENCES Document(id);
 
 
 CREATE INDEX IX_Office_Org_Id        ON Office   (org_id);
-CREATE INDEX IX_Document_Doc_type_Id ON Document (doctype_id);
+CREATE INDEX IX_Document_Doctype_Id ON Document (doctype_id);
 CREATE INDEX IX_User_Office_Id       ON User     (office_id);
 CREATE INDEX IX_User_Citizenship_Id  ON User     (citizenship_id);
 CREATE INDEX IX_User_Doc_Id          ON User     (doc_id);
