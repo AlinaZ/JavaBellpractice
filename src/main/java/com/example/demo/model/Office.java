@@ -87,15 +87,15 @@ public class Office {
 
     public String getAddress() { return address; }
 
-    public void setAddress() { this.address=address; }
+    public void setAddress(String address) { this.address=address; }
 
     public String getPhone() { return phone; }
 
-    public void setPhone() { this.phone=phone; }
+    public void setPhone(String phone) { this.phone=phone; }
 
     public boolean getIs_active() { return is_active; }
 
-    public void setIs_active() { this.is_active=is_active; }
+    public void setIs_active(boolean is_active) { this.is_active=is_active; }
 
     public Set<Office> getOffices() {
         if (offices == null) {

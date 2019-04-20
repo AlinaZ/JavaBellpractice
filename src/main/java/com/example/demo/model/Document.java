@@ -78,7 +78,7 @@ public class Document {
 
     public Long getDoctype_id() {  return doctype_id; }
 
-    public void setDoctype_id(Long coctype_id) { this.doctype_id = doctype_id; }
+    public void setDoctype_id(Long doctype_id) { this.doctype_id = doctype_id; }
 
     public String getDoc_number() { return doc_number; }
 
