@@ -1,18 +1,8 @@
 package com.example.demo.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Set;
+        import java.util.Set;
 
 /**
  * Организация
@@ -81,7 +71,10 @@ public class Organization {
     /** TODO
      * связь с таблицей офисы
      * */
+    @OneToMany
 
+
+    private Set<Organization> organizations;
     /**
      * Конструктор для hibernate
      */
@@ -145,9 +138,24 @@ public class Organization {
 
     public void setIs_active() { this.is_active=is_active; }
 
+    public Set<Organization> getOrganizations() {
+        if (organizations == null) {
+            organizations = new HashSet<>();
+        }
+        return organizations;
+    }
 
+   /* public void addOrganization(Organization organization) {
+        getOrganizations().add(organization);
+        house.getPersons().add(this);
+    }
 
+    public void removeHouse(House house) {
+        getHouses().remove(house);
+        house.getPersons().remove(this);
+    }
 
+*/
 
 
 
