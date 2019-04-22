@@ -2,7 +2,9 @@ package com.example.demo.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
-        import java.util.Set;
+import java.util.Set;
+import java.util.List;
+
 
 /**
  * Организация
@@ -71,8 +73,18 @@ public class Organization {
     /** TODO
      * связь с таблицей офисы
      * */
-    @OneToMany
+   // @Access(AccessType.PROPERTY)
+    @OneToMany(
+            mappedBy="organization",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+ //   @ElementCollection
+    private List<Office> offices;
 
+    public List<Office> getOffices() {
+        return offices;
+    }
 
     private Set<Organization> organizations;
     /**

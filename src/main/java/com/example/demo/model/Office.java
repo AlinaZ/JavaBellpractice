@@ -1,16 +1,6 @@
 package com.example.demo.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,8 +29,8 @@ public class Office {
     /**
      * ID организации, которой принадлежит офис
      */
-    @Column(name = "org_id", length = 100, nullable = false)
-    private Long org_id;
+    //@Column(name = "org_id", length = 100, nullable = false)
+
 
        /**
      * Адрес офиса
@@ -63,6 +53,18 @@ public class Office {
     /** TODO
      * связь с таблицей огранизации
      * */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "org_id")
+   // private Long org_id;
+    private Organization organization;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    public Organization getOrganization() {
+        return organization;
+    }
+
 
     private Set<Office> offices;
     /**
@@ -72,8 +74,8 @@ public class Office {
 
     }
 
-    public Office(Long org_id, String address, String phone, boolean is_active) {
-        this.org_id = org_id;
+    public Office(/*Long org_id,*/ String address, String phone, boolean is_active) {
+      //  this.org_id = org_id;
         this.address=address;
         this.phone=phone;
         this.is_active = is_active;  // поставить =false по умолчанию?
@@ -81,9 +83,9 @@ public class Office {
 
     public Long getId() {  return id; }
 
-    public Long getOrg_id() {  return org_id; }
+   // public Long getOrg_id() {  return org_id; }
 
-    public void setOrg_id(Long org_id) { this.org_id = org_id; }
+ //   public void setOrg_id(Long org_id) { this.org_id = org_id; }
 
     public String getAddress() { return address; }
 
