@@ -73,7 +73,7 @@ public class Organization {
     /** TODO
      * связь с таблицей офисы
      * */
-   // @Access(AccessType.PROPERTY)
+
     @OneToMany(
             mappedBy="organization",
             cascade = CascadeType.ALL,
@@ -84,6 +84,10 @@ public class Organization {
 
     public List<Office> getOffices() {
         return offices;
+    }
+
+    public void setOffices(List<Office> offices) {
+        this.offices = offices;
     }
 
     private Set<Organization> organizations;
