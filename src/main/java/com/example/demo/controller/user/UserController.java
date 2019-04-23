@@ -15,7 +15,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class UserController {
 
     // @ApiOperation("Проверка доступности приложения")
-    @RequestMapping(value = "/ping", method = {GET, POST})
+    @RequestMapping(value = "/user", method = {GET, POST})
     public String ping() {
         return "pong";
     }

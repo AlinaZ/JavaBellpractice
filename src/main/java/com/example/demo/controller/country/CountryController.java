@@ -14,10 +14,11 @@ import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Validated
 @RestController
-//@RequestMapping(value = "/", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/", produces = APPLICATION_JSON_VALUE)
 
 public class CountryController {
 
@@ -29,18 +30,8 @@ public class CountryController {
         this.countryService = countryService;
     }
 
-    @ApiOperation(value = "Добавить нового человека", httpMethod = "POST")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Success", response = String.class),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Failure")})
-    @PostMapping("/person")
-    public void country(@RequestBody CountryView country) {
-        countryService.add(country);
-    }
-
-    @ApiOperation(value = "Получить список всех людей", httpMethod = "GET")
-    @GetMapping("/country")
+    @ApiOperation(value = "Получить список всех стран", httpMethod = "GET")
+    @GetMapping("api/countries")
     public List<CountryView> countries() {
         return countryService.countries();
     }

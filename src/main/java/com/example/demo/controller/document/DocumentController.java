@@ -1,6 +1,6 @@
 package com.example.demo.controller.document;
 
-//import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +15,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class DocumentController {
 
     // @ApiOperation("Проверка доступности приложения")
-    @RequestMapping(value = "/ping", method = {GET, POST})
+    @RequestMapping(value = "/document", method = {GET, POST})
     public String ping() {
         return "pong";
     }
