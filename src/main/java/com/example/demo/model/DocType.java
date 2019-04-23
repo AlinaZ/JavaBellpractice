@@ -49,10 +49,9 @@ public class DocType {
     private String code;
 
     /** TODO
-     * связь с таблицей user
+     * связь с таблицей document
      * */
 
-    private Set<DocType> doctypes;
     /**
      * Конструктор для hibernate
      */
@@ -74,28 +73,5 @@ public class DocType {
     public String getCode() { return code; }
 
     public void setCode(String code) { this.code=code; }
-
-
-    public Set<DocType> getDocTypes() {
-        if (doctypes == null) {
-            doctypes = new HashSet<>();
-        }
-        return doctypes;
-    }
-
-   /* public void addDocType(DocType DocType) {
-        getDocTypes().add(DocType);
-        house.getPersons().add(this);
-    }
-
-    public void removeHouse(House house) {
-        getHouses().remove(house);
-        house.getPersons().remove(this);
-    }
-
-*/
-
-
-
 
 }

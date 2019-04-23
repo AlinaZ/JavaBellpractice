@@ -1,10 +1,9 @@
 package com.example.demo.model;
 
+import javax.persistence.OneToMany;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
-
 
 /**
  * Организация
@@ -70,27 +69,10 @@ public class Organization {
     @Column(name = "is_active", nullable = false)
     private boolean is_active;
 
-    /** TODO
-     * связь с таблицей офисы
-     * */
+    @OneToMany(mappedBy="organization",cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set <Office> offices;
 
-    @OneToMany(
-            mappedBy="organization",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
- //   @ElementCollection
-    private List<Office> offices;
-
-    public List<Office> getOffices() {
-        return offices;
-    }
-
-    public void setOffices(List<Office> offices) {
-        this.offices = offices;
-    }
-
-    private Set<Organization> organizations;
     /**
      * Конструктор для hibernate
      */
@@ -105,7 +87,7 @@ public class Organization {
         this.kpp=kpp;
         this.address=address;
         this.phone=phone;
-        this.is_active = is_active;  // поставить =false по умолчанию?
+        this.is_active = is_active;
     }
 
     public Long getId() {
@@ -154,26 +136,24 @@ public class Organization {
 
     public void setIs_active() { this.is_active=is_active; }
 
-    public Set<Organization> getOrganizations() {
-        if (organizations == null) {
-            organizations = new HashSet<>();
+    public Set<Office> getOffices() {
+        if (offices == null) {
+            offices = new HashSet<>();
         }
-        return organizations;
+        return offices;
     }
 
-   /* public void addOrganization(Organization organization) {
-        getOrganizations().add(organization);
-        house.getPersons().add(this);
+    public void setOffices(Set<Office> offices) {
+        this.offices = offices;
     }
 
-    public void removeHouse(House house) {
-        getHouses().remove(house);
-        house.getPersons().remove(this);
+    public void addOffice(Office office) {
+        getOffices().add(office);
+        office.setOrganization(this);
     }
-
-*/
-
-
-
+    public void removeOffice(Office office) {
+        getOffices().remove(office);
+        office.setOrganization(null);
+    }
 
 }

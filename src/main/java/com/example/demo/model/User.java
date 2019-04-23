@@ -1,16 +1,6 @@
 package com.example.demo.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -60,30 +50,11 @@ public class User {
     @Column(name = "position", length = 150, nullable = false)
     private String position;
 
-
-    /**
-     * ID офиса, за которым закреплен сотрудник
-     */
-    @Column(name = "office_id", nullable = false)
-    private Long office_id;
-
     /**
      * Телефон сотрудника
      */
     @Column(name = "phone", length = 11, nullable = false)
     private String phone;
-
-    /**
-     * ID документа, удостоверяющего личность сотрудника
-     */
-    @Column(name = "doc_id", nullable = false)
-    private Long doc_id;
-
-    /**
-     * ID страны гражданства
-     */
-    @Column(name = "citizenship_id", nullable = false)
-    private Long citizenship_id;
 
     /**
      * Подтвержден ли документ
@@ -95,7 +66,18 @@ public class User {
      * связь с таблицами документы, офис, страны
      * */
 
-    private Set<User> users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="office_id")
+    private Office office;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="citizenship_id")
+    private Country country;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="doc_id")
+    private Document document;
+
     /**
      * Конструктор для hibernate
      */
@@ -103,16 +85,16 @@ public class User {
 
     }
 
-    public User(String first_name, String last_name,String middle_name, String position, Long office_id, String phone, Long doc_id, Long citizenship_id, boolean is_identified) {
+    public User(String first_name, String last_name,String middle_name, String position, Office office, String phone, Document document, Country country, boolean is_identified) {
         this.first_name=first_name;
         this.last_name=last_name;
         this.middle_name=middle_name;
         this.position=position;
-        this.office_id = office_id;
+        this.office = office;
         this.phone=phone;
-        this.doc_id=doc_id;
-        this.citizenship_id=citizenship_id;
-        this.is_identified = is_identified;  // поставить =false по умолчанию?
+        this.document=document;
+        this.country=country;
+        this.is_identified = is_identified;
     }
 
     public Long getId() {  return id; }
@@ -129,38 +111,25 @@ public class User {
 
     public void setMiddle_name(String middle_name) { this.middle_name=middle_name; }
 
-    public Long getOffice_id() {  return office_id; }
+    public Office getOffice() {  return office; }
 
-    public void setOffice_id(Long office_id) { this.office_id = office_id; }
+    public void setOffice(Office office) { this.office = office; }
 
     public String getPhone() { return phone; }
 
     public void setPhone(String phone) { this.phone=phone; }
 
+    public Country getCountry() { return country; }
+
+    public void setCountry(Country country) {this.country=country;}
+
+    public Document getDocument() { return document; }
+
+    public void setDocument(Document document) {this.document=document;}
+
     public boolean getIs_identified() { return is_identified; }
 
     public void setIs_identified(boolean is_identified) { this.is_identified=is_identified; }
-
-    public Set<User> getUsers() {
-        if (users == null) {
-            users = new HashSet<>();
-        }
-        return users;
-    }
-
-   /* public void adduser(user user) {
-        getusers().add(user);
-        house.getPersons().add(this);
-    }
-
-    public void removeHouse(House house) {
-        getHouses().remove(house);
-        house.getPersons().remove(this);
-    }
-
-*/
-
-
 
 
 }

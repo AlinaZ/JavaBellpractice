@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import java.util.HashSet;
@@ -43,7 +43,7 @@ public class Country {
     private String name;
 
     /**
-            * Телефон офиса
+     *  Код страны
      */
     @Column(name = "code", length = 3, nullable = false)
     private String code;
@@ -52,7 +52,6 @@ public class Country {
      * связь с таблицей user
      * */
 
-    private Set<Country> countries;
     /**
      * Конструктор для hibernate
      */
@@ -74,28 +73,5 @@ public class Country {
     public String getCode() { return code; }
 
     public void setCode(String code) { this.code=code; }
-
-
-    public Set<Country> getCountries() {
-        if (countries == null) {
-            countries = new HashSet<>();
-        }
-        return countries;
-    }
-
-   /* public void addcountry(country country) {
-        getcountrys().add(country);
-        house.getPersons().add(this);
-    }
-
-    public void removeHouse(House house) {
-        getHouses().remove(house);
-        house.getPersons().remove(this);
-    }
-
-*/
-
-
-
 
 }

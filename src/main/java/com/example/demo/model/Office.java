@@ -27,12 +27,6 @@ public class Office {
     private Integer version;
 
     /**
-     * ID организации, которой принадлежит офис
-     */
-    //@Column(name = "org_id", length = 100, nullable = false)
-
-
-       /**
      * Адрес офиса
      */
     @Column(name = "address", length = 250, nullable = false)
@@ -50,23 +44,14 @@ public class Office {
     @Column(name = "is_active", nullable = false)
     private boolean is_active;
 
-    /** TODO
-     * связь с таблицей огранизации
-     * */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "org_id")
-   // private Long org_id;
+    @JoinColumn(name="org_id")
     private Organization organization;
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
 
-    public Organization getOrganization() {
-        return organization;
-    }
+    @OneToMany(mappedBy="office",cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Set <User> users;
 
-
-    private Set<Office> offices;
     /**
      * Конструктор для hibernate
      */
@@ -74,18 +59,14 @@ public class Office {
 
     }
 
-    public Office(/*Long org_id,*/ String address, String phone, boolean is_active) {
-      //  this.org_id = org_id;
+    public Office(Organization organization, String address, String phone, boolean is_active) {
+        this.organization = organization;
         this.address=address;
         this.phone=phone;
-        this.is_active = is_active;  // поставить =false по умолчанию?
+        this.is_active = is_active;
     }
 
     public Long getId() {  return id; }
-
-   // public Long getOrg_id() {  return org_id; }
-
- //   public void setOrg_id(Long org_id) { this.org_id = org_id; }
 
     public String getAddress() { return address; }
 
@@ -99,26 +80,32 @@ public class Office {
 
     public void setIs_active(boolean is_active) { this.is_active=is_active; }
 
-    public Set<Office> getOffices() {
-        if (offices == null) {
-            offices = new HashSet<>();
+    public Organization getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
+    }
+
+    public Set<User> getUsers() {
+        if (users == null) {
+            users = new HashSet<>();
         }
-        return offices;
+        return users;
     }
 
-   /* public void addoffice(office office) {
-        getoffices().add(office);
-        house.getPersons().add(this);
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
-    public void removeHouse(House house) {
-        getHouses().remove(house);
-        house.getPersons().remove(this);
+    public void addUser(User user) {
+        getUsers().add(user);
+        user.setOffice(this);
     }
-
-*/
-
-
-
+    public void removeUser(User user) {
+        getUsers().remove(user);
+        user.setOffice(null);
+    }
 
 }

@@ -1,20 +1,12 @@
 package com.example.demo.model;
 
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.sql.Date;
+import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
 
 /**
  * Страна гражданства сотрудника
@@ -39,12 +31,6 @@ public class Document {
     private Integer version;
 
     /**
-     * Id типа документа
-     */
-    @Column(name = "doctype_id", nullable= false)
-    private Long doctype_id;
-
-    /**
      * Номер документа
      */
     @Column(name = "doc_number", length = 50, nullable = false)
@@ -60,7 +46,11 @@ public class Document {
      * связь с таблицей doctype
      * */
 
-    private Set<Document> documents;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="doctype_id")
+    private DocType doctype;
+
+
     /**
      * Конструктор для hibernate
      */
@@ -68,17 +58,17 @@ public class Document {
 
     }
 
-    public Document(Long doctype_id, String doc_number,Date doc_date) {
-        this.doctype_id = doctype_id;
+    public Document(DocType doctype, String doc_number,Date doc_date) {
+        this.doctype = doctype;
         this.doc_number=doc_number;
         this.doc_date=doc_date;
     }
 
     public Long getId() {  return id; }
 
-    public Long getDoctype_id() {  return doctype_id; }
+    public DocType getDoctype() {  return doctype; }
 
-    public void setDoctype_id(Long doctype_id) { this.doctype_id = doctype_id; }
+    public void setDoctype_id(DocType doctype) { this.doctype = doctype; }
 
     public String getDoc_number() { return doc_number; }
 
@@ -89,12 +79,7 @@ public class Document {
     public void setDoc_date(Date doc_date) { this.doc_date=doc_date; }
 
 
-    public Set<Document> getDocuments() {
-        if (documents == null) {
-            documents = new HashSet<>();
-        }
-        return documents;
-    }
+
 
 
 
