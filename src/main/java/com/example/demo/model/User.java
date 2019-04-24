@@ -38,19 +38,19 @@ public class User {
     /**
      * имя сотрудника
      */
-    @Column(name = "firstName", length = 50, nullable = false)
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
     /**
      * Фамилия сотрудника
      */
-    @Column(name = "lastName", length = 50, nullable = false)
+    @Column(name = "last_name", length = 50, nullable = false)
     private String lastName;
 
     /**
      * отчетство сотрудника
      */
-    @Column(name = "middleName", length = 50, nullable = false)
+    @Column(name = "middle_name", length = 50, nullable = false)
     private String middleName;
 
     /**
@@ -68,7 +68,7 @@ public class User {
     /**
      * Подтвержден ли документ
      */
-    @Column(name = "isIdentified", nullable = false)
+    @Column(name = "is_identified", nullable = false)
     private boolean isIdentified;
 
     /**

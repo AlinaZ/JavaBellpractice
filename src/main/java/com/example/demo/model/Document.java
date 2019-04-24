@@ -87,7 +87,7 @@ public class Document {
      * @param doctype
      */
 
-    public void setDoctype_id(DocType doctype) { this.doctype = doctype; }
+    public void setDoctype(DocType doctype) { this.doctype = doctype; }
 
     /**
      * get document number
@@ -112,9 +112,9 @@ public class Document {
 
     /**
      * set document issue date
-     * @param doc_date
+     * @param date
      */
 
-    public void setDate(Date doc_date) { this.date=date; }
+    public void setDate(Date date) { this.date=date; }
 
 }

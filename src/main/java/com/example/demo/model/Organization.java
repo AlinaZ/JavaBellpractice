@@ -43,7 +43,7 @@ public class Organization {
     /**
      * Полное нименование организации
      */
-    @Column(name = "fullName", length = 250, nullable = false)
+    @Column(name = "full_name", length = 250, nullable = false)
     private String fullName;
 
     /**
@@ -73,7 +73,7 @@ public class Organization {
     /**
      * Действующая или ликвидирована
      */
-    @Column(name = "isActive", nullable = false)
+    @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
     /**
