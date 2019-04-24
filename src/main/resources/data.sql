@@ -20,9 +20,9 @@ INSERT INTO Doc_type (id, version, name, code) VALUES (13, 0, 'Иные доку
      	
 INSERT INTO Country (id, version, name, code) VALUES (1, 0, 'Российская Федерация', '643');
 
-INSERT INTO Document (id, version, doctype_id, doc_number,doc_date) VALUES (1, 0, 10, '8012123457', '2012-10-11');
-INSERT INTO Document (id, version, doctype_id, doc_number,doc_date) VALUES (2, 0, 10, '8012356421', '2012-10-11');
-INSERT INTO Document (id, version, doctype_id, doc_number,doc_date) VALUES (3, 0, 10, '8012321987', '2012-10-11');
+INSERT INTO Document (id, version, doctype_id, number,date) VALUES (1, 0, 10, '8012123457', '2012-10-11');
+INSERT INTO Document (id, version, doctype_id, number,date) VALUES (2, 0, 10, '8012356421', '2012-10-11');
+INSERT INTO Document (id, version, doctype_id, number,date) VALUES (3, 0, 10, '8012321987', '2012-10-11');
 
 INSERT INTO User (id, version, first_name, last_name, middle_name, position, office_id, phone, doc_id, citizenship_id, is_identified) VALUES (1, 0, 'Иван', 'Иванов', 'Иванович', 'Ведущий Java-разработчик', 1, '89191475847', 1, 1, true);	
 INSERT INTO User (id, version, first_name, last_name, middle_name, position, office_id, phone, doc_id, citizenship_id, is_identified) VALUES (2, 0, 'Шултаева', 'Екатерина', '?', 'Администратор проектов', 2, '89191475858', 2, 1, true);		

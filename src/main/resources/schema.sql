@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS Document (
 	id         INTEGER              COMMENT 'Уникальный идентификатор документа, удостоверяющего личность' PRIMARY KEY AUTO_INCREMENT,
 	version    INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
 	doctype_id INTEGER     NOT NULL COMMENT 'Уникальный идентификатор вида документа',
-	doc_number VARCHAR(50) NOT NULL COMMENT 'Номер индивидуального документа',
-    doc_date   DATE        NOT NULL COMMENT 'Дата выдачи индивидуального документа',
+	number VARCHAR(50) NOT NULL COMMENT 'Номер индивидуального документа',
+    date   DATE        NOT NULL COMMENT 'Дата выдачи индивидуального документа',
 );
 COMMENT ON TABLE Document IS 'Документы, удостоверяющие личность сотрудника';
 
