@@ -20,7 +20,7 @@ public class OrganizationView {
     @Size(max = 250)
     @NotEmpty(message = "org fullname cannot be null")
     @ApiModelProperty(value = "Organization fullname", example = "Bellintegrator.JSC")
-    public String full_name;
+    public String fullName;
 
     @Size(max = 12)
     @NotEmpty(message = "inn cannot be null")
@@ -44,10 +44,10 @@ public class OrganizationView {
 
     @NotNull(message = "")
     @ApiModelProperty(value = "Is organization active?", example = "1")
-    public boolean is_active;
+    public boolean isActive;
 
     @Override
     public String toString() {
-        return "{id:" + id + "\n"+";name:" + name + "\n"+";full_name:" + full_name + "\n"+ ";inn:" + inn + "\n"+";kpp:" + kpp +"\n"+";address:" + address+"\n"+";phone:" + phone+"\n"+";is_active:" + is_active+"}";
+        return "{id:" + id + "\n"+";name:" + name + "\n"+";full_name:" + fullName + "\n"+ ";inn:" + inn + "\n"+";kpp:" + kpp +"\n"+";address:" + address+"\n"+";phone:" + phone+"\n"+";is_active:" + isActive+"}";
     }
 }
