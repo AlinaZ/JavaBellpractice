@@ -216,7 +216,7 @@ public class Organization {
      * @param isActive
      */
 
-    public void setIs_active(boolean isActive) { this.isActive=isActive; }
+    public void setIsActive(boolean isActive) { this.isActive=isActive; }
 
     /**
      * get organization's offices
