@@ -85,6 +85,7 @@ public class Office {
         this.is_active = is_active;
     }
 
+
     /**
      * ID getter
      * @return id

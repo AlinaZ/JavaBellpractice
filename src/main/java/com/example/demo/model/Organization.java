@@ -76,6 +76,7 @@ public class Organization {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
+
     /**
      * Офисы организации
      */

@@ -17,6 +17,7 @@ import javax.persistence.Version;
 
 public class DocType {
 
+
     /**
      * Первичный ключ
      */
