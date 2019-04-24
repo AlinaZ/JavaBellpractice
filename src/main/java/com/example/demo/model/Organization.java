@@ -1,7 +1,14 @@
 package com.example.demo.model;
 
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
+import javax.persistence.Version;
 import javax.persistence.OneToMany;
-import javax.persistence.*;
+import javax.persistence.CascadeType;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,8 +43,8 @@ public class Organization {
     /**
      * Полное нименование организации
      */
-    @Column(name = "full_name", length = 250, nullable = false)
-    private String full_name;
+    @Column(name = "fullName", length = 250, nullable = false)
+    private String fullName;
 
     /**
      * ИНН организации
@@ -66,8 +73,12 @@ public class Organization {
     /**
      * Действующая или ликвидирована
      */
-    @Column(name = "is_active", nullable = false)
-    private boolean is_active;
+    @Column(name = "isActive", nullable = false)
+    private boolean isActive;
+
+    /**
+     * Офисы организации
+     */
 
     @OneToMany(mappedBy="organization",cascade = CascadeType.ALL,
             orphanRemoval = true)
@@ -80,61 +91,137 @@ public class Organization {
 
     }
 
-    public Organization(String name, String full_name, String inn, String kpp, String address, String phone, boolean is_active) {
+    public Organization(String name, String fullName, String inn, String kpp, String address, String phone, boolean isActive) {
         this.name = name;
-        this.full_name=full_name;
+        this.fullName=fullName;
         this.inn=inn;
         this.kpp=kpp;
         this.address=address;
         this.phone=phone;
-        this.is_active = is_active;
+        this.isActive = isActive;
     }
+
+    /**
+     * get organization Id
+     * @return id
+     */
 
     public Long getId() {
         return id;
     }
 
+    /**
+     * get organization name
+     * @return name
+     */
+
     public String getName() {
         return name;
     }
+
+    /**
+     * set organization name
+     * @param name
+     */
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getFull_name() {
-        return full_name;
+    /**
+     * get organization fullName
+     * @return fullName
+     */
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFull_name() { this.full_name=full_name; }
+    /**
+     * set organization fullName
+     * @param fullName
+     */
+    public void setFull_name(String fullName) { this.fullName=fullName; }
 
+    /**
+     * get organization inn
+     * @return
+     */
     public String getInn() {
         return inn;
     }
 
-    public void setInn() { this.inn=inn; }
+    /**
+     * set organization inn
+     * @param inn
+     */
+
+    public void setInn(String inn) { this.inn=inn; }
+
+    /**
+     * get organization kpp
+     * @return
+     */
 
     public String getKpp() {
         return kpp;
     }
 
-    public void setKpp() { this.kpp=kpp; }
+    /**
+     * set organization kpp
+     * @param kpp
+     */
 
+    public void setKpp(String kpp) { this.kpp=kpp; }
+
+    /**
+     * get organization address
+     * @return address
+     */
     public String getAddress() {
         return address;
     }
 
-    public void setAddress() { this.address=address; }
+    /**
+     * set organization address
+     * @param address
+     */
+
+    public void setAddress(String address) { this.address=address; }
+
+    /**
+     * get org phone
+     * @return
+     */
 
     public String getPhone() {
         return phone;
     }
 
-    public void setPhone() { this.phone=phone; }
+    /**
+     * set phone
+     * @param phone
+     */
 
-    public boolean getIs_active() { return is_active; }
+    public void setPhone(String phone) { this.phone=phone; }
 
-    public void setIs_active() { this.is_active=is_active; }
+    /**
+     * get if is organization active
+     * @return isActive
+     */
+
+    public boolean getIs_active() { return isActive; }
+
+    /**
+     * set is organizaiotn active
+     * @param isActive
+     */
+
+    public void setIs_active(boolean isActive) { this.isActive=isActive; }
+
+    /**
+     * get organization's offices
+     * @return
+     */
 
     public Set<Office> getOffices() {
         if (offices == null) {
@@ -143,14 +230,27 @@ public class Organization {
         return offices;
     }
 
+    /**
+     * set organization's offices
+     * @param offices
+     */
+
     public void setOffices(Set<Office> offices) {
         this.offices = offices;
     }
 
+    /**
+     * add office
+     * @param office
+     */
     public void addOffice(Office office) {
         getOffices().add(office);
         office.setOrganization(this);
     }
+
+    /**remove office
+     * @param office
+     */
     public void removeOffice(Office office) {
         getOffices().remove(office);
         office.setOrganization(null);

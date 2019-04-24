@@ -1,18 +1,12 @@
 package com.example.demo.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Страна гражданства сотрудника
@@ -64,13 +58,38 @@ public class Country {
         this.code=code;
     }
 
+    /**
+     * get country id
+     * @return id
+     */
+
     public Long getId() {  return id; }
+
+    /**
+     * get country name
+     * @return name
+     */
 
     public String getName() {  return name; }
 
+    /**
+     * set country name
+     * @param name
+     */
+
     public void setName(String name) { this.name = name; }
 
+    /**
+     * get country code
+     * @return
+     */
+
     public String getCode() { return code; }
+
+    /**
+     * set country code
+     * @param code
+     */
 
     public void setCode(String code) { this.code=code; }
 

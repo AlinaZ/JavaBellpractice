@@ -1,12 +1,18 @@
 package com.example.demo.model;
 
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.sql.Date;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Column;
+import javax.persistence.GenerationType;
+import javax.persistence.Version;
 import javax.persistence.ManyToOne;
-import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import java.sql.Date;
+
 
 /**
  * Страна гражданства сотрудника
@@ -33,19 +39,18 @@ public class Document {
     /**
      * Номер документа
      */
-    @Column(name = "doc_number", length = 50, nullable = false)
-    private String doc_number;
+    @Column(name = "number", length = 50, nullable = false)
+    private String number;
 
     /**
      * Дата выдачи документа
      */
-    @Column(name = "doc_date", nullable = false)
-    private Date doc_date;
+    @Column(name = "date", nullable = false)
+    private Date date;
 
-    /** TODO
-     * связь с таблицей doctype
-     * */
-
+    /**
+     * Типа документа, связь с DocType
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="doctype_id")
     private DocType doctype;
@@ -58,43 +63,58 @@ public class Document {
 
     }
 
-    public Document(DocType doctype, String doc_number,Date doc_date) {
+    public Document(DocType doctype, String number,Date date) {
         this.doctype = doctype;
-        this.doc_number=doc_number;
-        this.doc_date=doc_date;
+        this.number=number;
+        this.date=date;
     }
 
+    /**
+     * get Id
+     * @return id
+     */
     public Long getId() {  return id; }
+
+    /**
+     * get document type
+     * @return doctype
+     */
 
     public DocType getDoctype() {  return doctype; }
 
+    /**
+     * set document type
+     * @param doctype
+     */
+
     public void setDoctype_id(DocType doctype) { this.doctype = doctype; }
 
-    public String getDoc_number() { return doc_number; }
+    /**
+     * get document number
+     * @return number
+     */
 
-    public void setDoc_number(String doc_number) { this.doc_number=doc_number; }
+    public String getNumber() { return number; }
 
-    public Date getDoc_date() { return doc_date; }
+    /**
+     * set docuemtn number
+     * @param number
+     */
 
-    public void setDoc_date(Date doc_date) { this.doc_date=doc_date; }
+    public void setNumber(String number) { this.number=number; }
 
+    /**
+     * get document issue date
+     * @return
+     */
 
+    public Date getDate() { return date; }
 
+    /**
+     * set document issue date
+     * @param doc_date
+     */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void setDate(Date doc_date) { this.date=date; }
 
 }
