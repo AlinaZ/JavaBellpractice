@@ -40,6 +40,19 @@ public class OfficeDaoImpl implements OfficeDao {
         return em.find(Office.class, id);
     }
 
+
+    @Override
+    public Office loadByName(String name) {
+        List<Office> all = all();
+        Office officeNamed = null;
+        for (Office o : all) {
+            if (o.getName().equals(name)) {
+                officeNamed = o;
+            }
+        }
+        return officeNamed;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -59,8 +72,8 @@ public class OfficeDaoImpl implements OfficeDao {
         if (office.getPhone() != null) {
             originalOffice.setPhone(office.getPhone());
         }
-        if (office.getIs_active()) {
-            originalOffice.setIs_active(office.getIs_active());
+        if (office.getIsActive()) {
+            originalOffice.setIsActive(office.getIsActive());
         }
         em.flush();
     }

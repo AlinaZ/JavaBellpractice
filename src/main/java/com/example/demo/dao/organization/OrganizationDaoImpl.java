@@ -71,8 +71,8 @@ public class OrganizationDaoImpl implements OrganizationDao {
         if (organization.getPhone() != null) {
             originalOrg.setPhone(organization.getPhone());
         }
-        if (organization.getIs_active()) {
-            originalOrg.setIsActive(organization.getIs_active());
+        if (organization.getIsActive()) {
+            originalOrg.setIsActive(organization.getIsActive());
         }
         em.flush();
     }

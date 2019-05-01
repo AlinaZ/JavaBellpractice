@@ -2,6 +2,7 @@ package com.example.demo.dao.user;
 
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -38,6 +39,19 @@ public class UserDaoImpl implements UserDao {
         return em.find(User.class, id);
     }
 
+
+    @Override
+    public User loadByFullName(String firstName, String lastName, String middleName) {
+        List<User> all = all();
+        User userNamed = null;
+        for (User u : all) {
+            if (u.getFirstName().equals(firstName) && u.getLastName().equals(lastName) && u.getMiddleName().equals(middleName)) {
+                userNamed = u;
+            }
+        }
+        return userNamed;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -66,11 +80,13 @@ public class UserDaoImpl implements UserDao {
         if (user.getCountry() != null) {
             originalUser.setCountry(user.getCountry());
         }
-        originalUser.setDocument(user.getDocument());
+        if (user.getDocument().getDocType() != null) {
+            originalUser.setDocument(user.getDocument());
+        }
         if (user.getPhone() != null) {
             originalUser.setPhone(user.getPhone());
         }
-        if(user.getIsIdentified()!=null) {
+        if (user.getIsIdentified() != null) {
             originalUser.setIsIdentified(user.getIsIdentified());
         }
         em.flush();

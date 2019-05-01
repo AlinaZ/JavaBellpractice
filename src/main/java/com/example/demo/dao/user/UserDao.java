@@ -23,6 +23,8 @@ public interface UserDao {
      */
     User loadById(Long id);
 
+    User loadByFullName(String firstName, String lastName, String middleName);
+
     /**
      * Сохранить User
      *

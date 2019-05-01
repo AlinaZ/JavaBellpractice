@@ -42,11 +42,11 @@ public class UserView {
     @ApiModelProperty(value = "user's doc name", example = "1")
     public String docName;
 
-    @ApiModelProperty(value = "user's doc name", example = "1")
+    @ApiModelProperty(value = "user's doc number", example = "1")
     public String docNumber;
 
-    @ApiModelProperty(value = "user's doc name", example = "1")
-    public Date docDate;
+    @ApiModelProperty(value = "user's doc date", example = "1")
+    public LocalDate docDate;
 
     @ApiModelProperty(value = "user's citizenship", example = "1")
     public String citizenshipCode;

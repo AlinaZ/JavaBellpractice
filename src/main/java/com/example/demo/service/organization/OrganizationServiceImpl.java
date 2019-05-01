@@ -77,7 +77,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                     compare = compare && compareInn;
                 }
                 if (view.isActive!=null) {
-                    boolean compareIsActive = (org.getIs_active() == view.isActive);
+                    boolean compareIsActive = (org.getIsActive() == view.isActive);
                     compare = compare && compareIsActive;
                 }
                 if (compare) {
@@ -95,7 +95,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             OrgsListOutView view = new OrgsListOutView();
             view.id = o.getId();
             view.name = o.getName();
-            view.isActive = o.getIs_active();
+            view.isActive = o.getIsActive();
             return view;
         };
     }
@@ -124,7 +124,7 @@ public class OrganizationServiceImpl implements OrganizationService {
             view.kpp = o.getKpp();
             view.address = o.getAddress();
             view.phone = o.getPhone();
-            view.isActive = o.getIs_active();
+            view.isActive = o.getIsActive();
             return view;
         };
     }

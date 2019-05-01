@@ -106,6 +106,10 @@ public class Organization {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -154,7 +158,7 @@ public class Organization {
         this.phone = phone;
     }
 
-    public boolean getIs_active() {
+    public boolean getIsActive() {
         return isActive;
     }
 

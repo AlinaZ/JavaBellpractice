@@ -4,11 +4,8 @@ import com.example.demo.DemoApplication;
 import com.example.demo.dao.office.OfficeDao;
 import com.example.demo.model.Office;
 import com.example.demo.service.office.OfficeServiceImpl;
-import com.example.demo.service.organization.OrganizationServiceImpl;
 import com.example.demo.view.office.OfficeListInView;
 import com.example.demo.view.office.OfficeView;
-import com.example.demo.view.organization.OrganizationView;
-import com.example.demo.view.organization.OrgsListInView;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,8 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.example.demo.dao.organization.OrganizationDao;
-import com.example.demo.model.Organization;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -46,9 +41,6 @@ public class OfficeIntegrationTests {
     public void init() {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-
-
-        //repository.deleteAll();
     }
 
     /**
@@ -72,7 +64,7 @@ public class OfficeIntegrationTests {
         String expected = "{\"data\":" +
                 "{\"id\":" + id + "," +
                 "\"name\":\"Office name\"," +
-                "\"orgId\":1,"  +
+                "\"orgId\":1," +
                 "\"address\":\"Уфа, Свердлова, 92\"," +
                 "\"phone\":\"89191489168\"," +
                 "\"isActive\":true}}";
@@ -107,7 +99,6 @@ public class OfficeIntegrationTests {
         officeView.address = "Уфа, Свердлова, 92";
         officeView.phone = "89191489168";
         officeView.isActive = true;
-        service.add(officeView);
 
         HttpEntity entity = new HttpEntity<>(officeView, headers);
         String url = "/api/office/save";
@@ -158,7 +149,7 @@ public class OfficeIntegrationTests {
         long updId = dao.loadByName("Office name").getId();
 
         OfficeView officeView1 = new OfficeView();
-        officeView1.id=updId;
+        officeView1.id = updId;
         officeView1.name = "New Office name";
         officeView1.address = "Ufa, Свердлова, 92";
 
@@ -185,7 +176,7 @@ public class OfficeIntegrationTests {
     @Test
     public void updateOfficeFailTest1() {
         OfficeView officeView1 = new OfficeView();
-        officeView1.id=null;
+        officeView1.id = null;
         officeView1.name = "New Office name";
         officeView1.address = "Ufa, Свердлова, 92";
 
@@ -206,7 +197,7 @@ public class OfficeIntegrationTests {
     @Test
     public void updateOfficeFailTest2() {
         OfficeView officeView1 = new OfficeView();
-        officeView1.id=Long.valueOf(1);
+        officeView1.id = Long.valueOf(1);
         officeView1.name = null;
         officeView1.address = "Ufa, Свердлова, 92";
 
@@ -227,7 +218,7 @@ public class OfficeIntegrationTests {
     @Test
     public void updateOfficeFailTest3() {
         OfficeView officeView1 = new OfficeView();
-        officeView1.id=Long.valueOf(1);
+        officeView1.id = Long.valueOf(1);
         officeView1.name = "Office name";
         officeView1.address = null;
 
@@ -248,7 +239,7 @@ public class OfficeIntegrationTests {
     @Test
     public void updateOfficeFailTest5() {
         OfficeView officeView1 = new OfficeView();
-        officeView1.id=Long.valueOf(10);
+        officeView1.id = Long.valueOf(10);
         officeView1.name = "Office name";
         officeView1.address = "Ufa, Свердлова, 92";
 
@@ -278,7 +269,7 @@ public class OfficeIntegrationTests {
         long id = dao.loadByName("Office123 name").getId();
 
         OfficeListInView officeListView = new OfficeListInView();
-        officeListView.orgId=Long.valueOf(1);
+        officeListView.orgId = Long.valueOf(1);
         officeListView.name = "Office123 name";
         officeListView.phone = "79191489168";
         officeListView.isActive = true;
@@ -302,7 +293,7 @@ public class OfficeIntegrationTests {
     @Test
     public void listParamOfficeFailTest() {
         OfficeListInView officeListView = new OfficeListInView();
-        officeListView.orgId=null;
+        officeListView.orgId = null;
         officeListView.name = "Office123 name";
         officeListView.phone = "79191489168";
         officeListView.isActive = true;

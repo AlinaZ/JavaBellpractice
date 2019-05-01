@@ -23,6 +23,8 @@ public interface OfficeDao {
      */
     Office loadById(Long id);
 
+    Office loadByName(String name);
+
     /**
      * Сохранить Office
      *

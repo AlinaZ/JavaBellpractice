@@ -1,10 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.dao.organization.OrganizationDaoImpl;
 import com.example.demo.service.organization.OrganizationServiceImpl;
 import com.example.demo.view.organization.OrganizationView;
 import com.example.demo.view.organization.OrgsListInView;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,19 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-import com.example.demo.DemoApplication;
 import com.example.demo.dao.organization.OrganizationDao;
 import com.example.demo.model.Organization;
-import com.example.demo.service.organization.OrganizationService;
-
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
-import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -285,6 +272,7 @@ public class OrgIntegrationTests {
         assertEquals(updatedOrg.getInn(), orgUpdView.inn);
         assertEquals(updatedOrg.getKpp(), orgUpdView.kpp);
         assertEquals(updatedOrg.getPhone(), orgView.phone);
+        assertEquals(updatedOrg.getAddress(), orgUpdView.address);
         assertEquals(updatedOrg.getIsActive(), orgView.isActive);
     }
 

@@ -1,15 +1,12 @@
 package com.example.demo.model;
 
-
-
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 
 
 /**
- * Страна гражданства сотрудника
+ * Документ сотрудника
  */
 @Entity
 @Table(name = "Document")
@@ -39,14 +36,14 @@ public class Document {
      * Дата выдачи документа
      */
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     /**
-     * Типа документа, связь с DocType
+     * Тип документа, связь с DocType
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctype_id")
-    private DocType doctype;
+    private DocType docType;
 
 
     /**
@@ -56,8 +53,8 @@ public class Document {
 
     }
 
-    public Document(DocType doctype, String number, Date date) {
-        this.doctype = doctype;
+    public Document(DocType docType, String number, LocalDate date) {
+        this.docType = docType;
         this.number = number;
         this.date = date;
     }
@@ -67,12 +64,12 @@ public class Document {
         return id;
     }
 
-    public DocType getDoctype() {
-        return doctype;
+    public DocType getDocType() {
+        return docType;
     }
 
-    public void setDoctype(DocType doctype) {
-        this.doctype = doctype;
+    public void setDocType(DocType docType) {
+        this.docType = docType;
     }
 
     public String getNumber() {
@@ -83,11 +80,11 @@ public class Document {
         this.number = number;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

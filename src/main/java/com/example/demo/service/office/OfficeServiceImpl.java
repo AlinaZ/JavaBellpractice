@@ -55,10 +55,10 @@ public class OfficeServiceImpl implements OfficeService {
             } else {
                 office.setPhone("-");
             }
-            if (view.isActive!=null) {
-                office.setIs_active(view.isActive);
+            if (view.isActive != null) {
+                office.setIsActive(view.isActive);
             } else {
-                office.setIs_active(true);
+                office.setIsActive(true);
             }
         }
         dao.save(office);
@@ -88,7 +88,7 @@ public class OfficeServiceImpl implements OfficeService {
                     boolean comparePhones = office.getPhone().equals(view.phone);
                     compare = compare && comparePhones;
                 }
-                if (compare && office.getIs_active()) {
+                if (compare && office.getIsActive()) {
                     result.add(office);
                 }
             }
@@ -101,9 +101,9 @@ public class OfficeServiceImpl implements OfficeService {
     private Function<Office, OfficeListOutView> mapOfficeList() {
         return o -> {
             OfficeListOutView view = new OfficeListOutView();
-            view.id = String.valueOf(o.getId());
+            view.id = o.getId();
             view.name = o.getName();
-            view.isActive = o.getIs_active();
+            view.isActive = o.getIsActive();
             return view;
         };
     }
@@ -131,11 +131,19 @@ public class OfficeServiceImpl implements OfficeService {
             view.orgId = o.getOrganization().getId();
             view.address = o.getAddress();
             view.phone = o.getPhone();
-            view.isActive = o.getIs_active();
+            view.isActive = o.getIsActive();
             return view;
         };
     }
 
+    private void checkPhoneIsActive(OfficeView view,Office office){
+        if (view.phone != null) {
+            office.setPhone(view.phone);
+        }
+        if (view.isActive != null) {
+            office.setIsActive(view.isActive);
+        }
+    }
     /**
      * {@inheritDoc}
      */
@@ -157,12 +165,7 @@ public class OfficeServiceImpl implements OfficeService {
             } else {
                 office.setName(view.name);
                 office.setAddress(view.address);
-                if (view.phone != null) {
-                    office.setPhone(view.phone);
-                }
-                if (view.isActive!=null) {
-                    office.setIs_active(view.isActive);
-                }
+                checkPhoneIsActive(view,office);
                 dao.update(office, view.id);
             }
         }

@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 public class OfficeListOutView {
 
     @ApiModelProperty(value = "Уникальный идентификатор", example = "1")
-    public String id;
+    public Long id;
 
     @Size(max = 20)
     @ApiModelProperty(value = "Office name", example = "83472777877")

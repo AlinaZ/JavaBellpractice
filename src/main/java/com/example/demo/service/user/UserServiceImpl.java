@@ -80,13 +80,13 @@ public class UserServiceImpl implements UserService {
             if (view.docDate != null) {
                 userdoc.setDate(view.docDate);
             }
-            else {userdoc.setDate(Date.valueOf("1800-12-12"));}
+            else {userdoc.setDate(LocalDate.MIN);}
             if (view.docCode != null) {
                 DocType dctByCode = dctD.loadByCode(view.docCode);
                 if (dctByCode == null) {
                     throw new CustomException("Нет типа документа с таким кодом");
                 } else {
-                    userdoc.setDoctype(dctByCode);
+                    userdoc.setDocType(dctByCode);
                 }
             }
             if (view.docName != null) {
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
                 if (dctByName == null) {
                     throw new CustomException("Нет типа документа с таким названием");
                 } else {
-                    userdoc.setDoctype(dctByName);
+                    userdoc.setDocType(dctByName);
                 }
             }
             if (view.docCode != null && view.docName != null) {
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
                     compare = compare && comparePosition;
                 }
                 if (view.docCode != null) {
-                    boolean compareDocCode = user.getDocument().getDoctype().getCode().equals(view.docCode);
+                    boolean compareDocCode = user.getDocument().getDocType().getCode().equals(view.docCode);
                     compare = compare && compareDocCode;
                 }
                 if (view.citizenshipCode != null) {
@@ -194,7 +194,7 @@ public class UserServiceImpl implements UserService {
             view.firstName = u.getFirstName();
             view.lastName = u.getLastName();
             view.middleName = u.getMiddleName();
-            view.docName = u.getDocument().getDoctype().getName();
+            view.docName = u.getDocument().getDocType().getName();
             view.docNumber = u.getDocument().getNumber();
             view.docDate = u.getDocument().getDate();
             view.officeId = u.getOffice().getId();
@@ -270,7 +270,7 @@ public class UserServiceImpl implements UserService {
             if (dctD.loadByName(view.docName) == null) {
                 throw new CustomException("В справочнике Виды документов нет такого документа");
             } else {
-                userDoc.setDoctype(dctD.loadByName(view.docName));
+                userDoc.setDocType(dctD.loadByName(view.docName));
             }
         }
         user.setDocument(userDoc);
