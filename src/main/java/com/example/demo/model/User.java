@@ -18,7 +18,6 @@ import javax.persistence.CascadeType;
  */
 @Entity
 @Table(name = "User")
-
 public class User {
 
     /**
@@ -74,23 +73,23 @@ public class User {
 
     /**
      * Офис, в котором работает сотрудникб связь с Office
-      */
+     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="office_id")
+    @JoinColumn(name = "office_id")
     private Office office;
-    
+
     /**
      * Гражданство сотрудника, связь с Country
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="citizenship_id")
+    @JoinColumn(name = "citizenship_id")
     private Country country;
-    
+
     /**
      * Документ, удостоверяющий личность сотрудника, связь с Document
      */
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="doc_id")
+    @JoinColumn(name = "doc_id")
     private Document document;
 
     /**
@@ -100,137 +99,93 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName,String middleName, String position, Office office, String phone, Document document, Country country, boolean isIdentified) {
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.middleName=middleName;
-        this.position=position;
+    public User(String firstName, String lastName, String middleName, String position, Office office, String phone, Document document, Country country, boolean isIdentified) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.middleName = middleName;
+        this.position = position;
         this.office = office;
-        this.phone=phone;
-        this.document=document;
-        this.country=country;
+        this.phone = phone;
+        this.document = document;
+        this.country = country;
         this.isIdentified = isIdentified;
     }
 
-    /**
-     * get user Id
-     * @return id
-     */
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() {  return id; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    /**
-     * get user first name
-     * @return firstName
-     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public String getFirstName() { return firstName;    }
+    public String getLastName() {
+        return lastName;
+    }
 
-    /**
-     * set user's first name
-     * @param firstName
-     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public void setFirstName(String firstName) {  this.firstName = firstName; }
+    public String getMiddleName() {
+        return middleName;
+    }
 
-    /**
-     * get user's last name
-     * @return lastName
-     */
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-    public String getLastName() { return lastName; }
+    public Office getOffice() {
+        return office;
+    }
 
-    /**
-     * set user's last name
-     * @param lastName
-     */
+    public void setOffice(Office office) {
+        this.office = office;
+    }
 
-    public void setLastName(String lastName) { this.lastName=lastName; }
+    public String getPosition() {
+        return position;
+    }
 
-    /**
-     * get user's middle name
-     * @return middleName
-     */
+    public void setPosition(String position) {
+        this.position = position;
+    }
 
-    public String getMiddleName() { return middleName; }
+    public String getPhone() {
+        return phone;
+    }
 
-    /**
-     * set user's middleName
-     * @param middleName
-     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    public void setMiddleName(String middleName) { this.middleName=middleName; }
+    public Country getCountry() {
+        return country;
+    }
 
-    /**
-     * get office
-     * @return office
-     */
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
-    public Office getOffice() {  return office; }
+    public Document getDocument() {
+        return document;
+    }
 
-    /**
-     * set office
-     * @param office
-     */
+    public void setDocument(Document document) {
+        this.document = document;
+    }
 
-    public void setOffice(Office office) { this.office = office; }
+    public boolean getIsIdentified() {
+        return isIdentified;
+    }
 
-    /**
-     * get user's phone
-     * @return phone
-     */
-   public String getPosition(){return position;}
-   public void setPosition(String position) {this.position=position;}
-   public String getPhone() { return phone; }
-
-    /**
-     * set user's phone
-     * @param phone
-     */
-
-    public void setPhone(String phone) { this.phone=phone; }
-
-    /**
-     * get user's citizenship
-     * @return county
-     */
-
-    public Country getCountry() { return country; }
-
-    /**
-     * set user's citizenship
-     * @param country
-     */
-
-    public void setCountry(Country country) {this.country=country;}
-
-    /**
-     * get user's document
-     * @return document
-     */
-
-    public Document getDocument() { return document; }
-
-    /**
-     * set user's document
-     * @param document
-     */
-
-    public void setDocument(Document document) {this.document=document;}
-
-    /**
-     * get if user is identified
-     * @return
-     */
-
-    public boolean getIsIdentified() { return isIdentified; }
-
-    /**
-     * set if uset is identified
-     * @param isIdentified
-     */
-
-    public void setIsIdentified(boolean isIdentified) { this.isIdentified=isIdentified; }
+    public void setIsIdentified(boolean isIdentified) {
+        this.isIdentified = isIdentified;
+    }
 
 
 }

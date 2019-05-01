@@ -14,7 +14,6 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "Country")
-
 public class Country {
 
     /**
@@ -38,14 +37,10 @@ public class Country {
     private String name;
 
     /**
-     *  Код страны
+     * Код страны
      */
     @Column(name = "code", length = 3, nullable = false)
     private String code;
-
-       /** TODO
-     * связь с таблицей user
-     * */
 
     /**
      * Конструктор для hibernate
@@ -56,42 +51,27 @@ public class Country {
 
     public Country(String name, String code) {
         this.name = name;
-        this.code=code;
+        this.code = code;
     }
 
-    /**
-     * get country id
-     * @return id
-     */
+    public Long getId() {
+        return id;
+    }
 
-    public Long getId() {  return id; }
+    public String getName() {
+        return name;
+    }
 
-    /**
-     * get country name
-     * @return name
-     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getName() {  return name; }
+    public String getCode() {
+        return code;
+    }
 
-    /**
-     * set country name
-     * @param name
-     */
-
-    public void setName(String name) { this.name = name; }
-
-    /**
-     * get country code
-     * @return
-     */
-
-    public String getCode() { return code; }
-
-    /**
-     * set country code
-     * @param code
-     */
-
-    public void setCode(String code) { this.code=code; }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
 }

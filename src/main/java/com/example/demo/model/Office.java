@@ -20,7 +20,6 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "office")
-
 public class Office {
 
     /**
@@ -67,18 +66,16 @@ public class Office {
      */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="org_id")
+    @JoinColumn(name = "org_id")
     private Organization organization;
-
-   /* private Long orgIg=organization.getId(); */
 
     /**
      * Сотрудники офиса, связь с users
      */
 
-    @OneToMany(mappedBy="office",cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set <User> users;
+    private Set<User> users;
 
     /**
      * Конструктор для hibernate
@@ -87,86 +84,57 @@ public class Office {
 
     }
 
-    public Office(Organization organization, String name,String address, String phone, boolean is_active) {
+    public Office(Organization organization, String name, String address, String phone, boolean is_active) {
         this.organization = organization;
-        this.name=name;
-        this.address=address;
-        this.phone=phone;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
         this.is_active = is_active;
     }
 
+    public Long getId() {
+        return id;
+    }
 
-    /**
-     * ID getter
-     * @return id
-     */
+    public String getName() {
+        return name;
+    }
 
-    public Long getId() {  return id; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    /**
-     * address getter
-     * @return address
-     */
-    public String getName(){return name;}
-    public void setName(String name) {this.name=name;}
+    public String getAddress() {
+        return address;
+    }
 
-    public String getAddress() { return address; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    /**
-     * set address
-     * @param address
-     */
+    public String getPhone() {
+        return phone;
+    }
 
-    public void setAddress(String address) { this.address=address; }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    /**
-     * phone getter
-     * @return phone
-     */
-    public String getPhone() { return phone; }
+    public boolean getIs_active() {
+        return is_active;
+    }
 
-    /**
-     * set phone
-     * @param phone
-     */
+    public void setIs_active(boolean is_active) {
+        this.is_active = is_active;
+    }
 
-    public void setPhone(String phone) { this.phone=phone; }
-
-    /**
-     * is_active getter
-     * @return is_active
-     */
-
-    public boolean getIs_active() { return is_active; }
-
-    /**
-     * set is_active
-     * @param is_active
-     */
-
-    public void setIs_active(boolean is_active) { this.is_active=is_active; }
-
-    /**
-     * Organization getter
-     * @return organization
-     */
     public Organization getOrganization() {
         return organization;
     }
 
-    /**
-     * set organizaton
-     * @param organization
-     */
-
     public void setOrganization(Organization organization) {
         this.organization = organization;
     }
-
-    /**
-     * Users getter
-     * @return users
-     */
 
     public Set<User> getUsers() {
         if (users == null) {
@@ -179,20 +147,11 @@ public class Office {
         this.users = users;
     }
 
-    /**
-     * add user to office
-     * @param user
-     */
-
     public void addUser(User user) {
         getUsers().add(user);
         user.setOffice(this);
     }
 
-    /**
-     * remove user from office
-     * @param user
-     */
     public void removeUser(User user) {
         getUsers().remove(user);
         user.setOffice(null);

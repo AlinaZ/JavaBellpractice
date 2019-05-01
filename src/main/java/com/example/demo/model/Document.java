@@ -19,9 +19,7 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = "Document")
-
 public class Document {
-
 
     /**
      * Первичный ключ
@@ -53,7 +51,7 @@ public class Document {
      * Типа документа, связь с DocType
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="doctype_id")
+    @JoinColumn(name = "doctype_id")
     private DocType doctype;
 
 
@@ -64,58 +62,39 @@ public class Document {
 
     }
 
-    public Document(DocType doctype, String number,Date date) {
+    public Document(DocType doctype, String number, Date date) {
         this.doctype = doctype;
-        this.number=number;
-        this.date=date;
+        this.number = number;
+        this.date = date;
     }
 
-    /**
-     * get Id
-     * @return id
-     */
-    public Long getId() {  return id; }
 
-    /**
-     * get document type
-     * @return doctype
-     */
+    public Long getId() {
+        return id;
+    }
 
-    public DocType getDoctype() {  return doctype; }
+    public DocType getDoctype() {
+        return doctype;
+    }
 
-    /**
-     * set document type
-     * @param doctype
-     */
+    public void setDoctype(DocType doctype) {
+        this.doctype = doctype;
+    }
 
-    public void setDoctype(DocType doctype) { this.doctype = doctype; }
+    public String getNumber() {
+        return number;
+    }
 
-    /**
-     * get document number
-     * @return number
-     */
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-    public String getNumber() { return number; }
+    public Date getDate() {
+        return date;
+    }
 
-    /**
-     * set docuemtn number
-     * @param number
-     */
-
-    public void setNumber(String number) { this.number=number; }
-
-    /**
-     * get document issue date
-     * @return
-     */
-
-    public Date getDate() { return date; }
-
-    /**
-     * set document issue date
-     * @param date
-     */
-
-    public void setDate(Date date) { this.date=date; }
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
 }

@@ -14,9 +14,7 @@ import javax.persistence.Version;
  */
 @Entity
 @Table(name = "Doc_type")
-
 public class DocType {
-
 
     /**
      * Первичный ключ
@@ -33,13 +31,13 @@ public class DocType {
     private Integer version;
 
     /**
-     * Название страны
+     * Название документа
      */
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
     /**
-     * Телефон офиса
+     * Код документа
      */
     @Column(name = "code", length = 3, nullable = false)
     private String code;
@@ -53,41 +51,27 @@ public class DocType {
 
     public DocType(String name, String code) {
         this.name = name;
-        this.code=code;
+        this.code = code;
     }
 
-    /**
-     * get doctype id
-     * @return id
-     */
-    public Long getId() {  return id; }
+    public Long getId() {
+        return id;
+    }
 
-    /**
-     * get doctype name
-     * @return name
-     */
+    public String getName() {
+        return name;
+    }
 
-    public String getName() {  return name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    /**
-     * set doctype name
-     * @param name
-     */
+    public String getCode() {
+        return code;
+    }
 
-    public void setName(String name) { this.name = name; }
-
-    /**
-     * get doctype code
-     * @return code
-     */
-
-    public String getCode() { return code; }
-
-    /**
-     * set doctype code
-     * @param code
-     */
-
-    public void setCode(String code) { this.code=code; }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
 }
