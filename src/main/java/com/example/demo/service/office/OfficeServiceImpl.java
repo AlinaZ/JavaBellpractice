@@ -2,7 +2,7 @@ package com.example.demo.service.office;
 
 import com.example.demo.dao.office.OfficeDao;
 import com.example.demo.dao.organization.OrganizationDao;
-import com.example.demo.exceptionhandler.OfficeException;
+import com.example.demo.exceptionhandler.CustomException;
 import com.example.demo.model.Office;
 import com.example.demo.view.SuccessView;
 import com.example.demo.view.office.*;
@@ -34,10 +34,10 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public SuccessView add(OfficeSaveView view) {
+    public SuccessView add(OfficeView view) {
         Office office = new Office();
         if (view.orgId == null) {
-            throw new OfficeException("Не задан идентификатор организации, которой принадлежит офис");
+            throw new CustomException("Не задан идентификатор организации, которой принадлежит офис");
         } else {
             office.setOrganization(orgD.loadById(view.orgId));
             if (view.name != null) {
@@ -55,7 +55,7 @@ public class OfficeServiceImpl implements OfficeService {
             } else {
                 office.setPhone("-");
             }
-            if (view.isActive) {
+            if (view.isActive!=null) {
                 office.setIs_active(view.isActive);
             } else {
                 office.setIs_active(true);
@@ -74,7 +74,7 @@ public class OfficeServiceImpl implements OfficeService {
         List<Office> all = dao.all();
         List<Office> result = new ArrayList<>();
         if (view.orgId == null) {
-            throw new OfficeException("Не задано Id организации,котрой принадлежат офисы");
+            throw new CustomException("Не задано Id организации,котрой принадлежат офисы");
         } else {
             for (Office office : all) {
                 boolean compare;
@@ -118,7 +118,7 @@ public class OfficeServiceImpl implements OfficeService {
         if (officeById != null) {
             return mapOffice().apply(officeById);
         } else {
-            throw new OfficeException("Нет офиса с Id=" + id);
+            throw new CustomException("Нет офиса с Id=" + id);
         }
     }
 
@@ -126,9 +126,9 @@ public class OfficeServiceImpl implements OfficeService {
     private Function<Office, OfficeView> mapOffice() {
         return o -> {
             OfficeView view = new OfficeView();
-            view.id = String.valueOf(o.getId());
+            view.id = o.getId();
             view.name = o.getName();
-            view.orgId = String.valueOf(o.getOrganization().getId());
+            view.orgId = o.getOrganization().getId();
             view.address = o.getAddress();
             view.phone = o.getPhone();
             view.isActive = o.getIs_active();
@@ -141,26 +141,26 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public SuccessView update(OfficeUpdView view) {
+    public SuccessView update(OfficeView view) {
         if (view.id == null) {
-            throw new OfficeException("Невозможно обновить офис: не задан ID");
+            throw new CustomException("Невозможно обновить офис: не задан ID");
         }
         if (dao.loadById(view.id) == null) {
-            throw new OfficeException("Офиса, который вы пытаетесь обновить, нет в базе, id=" + view.id);
+            throw new CustomException("Офиса, который вы пытаетесь обновить, нет в базе, id=" + view.id);
         } else {
             Office office = new Office();
             if (view.name == null) {
-                throw new OfficeException("Не задано название офиса");
+                throw new CustomException("Не задано название офиса");
             }
             if (view.address == null) {
-                throw new OfficeException("Не задан адрес офиса");
+                throw new CustomException("Не задан адрес офиса");
             } else {
                 office.setName(view.name);
                 office.setAddress(view.address);
                 if (view.phone != null) {
                     office.setPhone(view.phone);
                 }
-                if (view.isActive) {
+                if (view.isActive!=null) {
                     office.setIs_active(view.isActive);
                 }
                 dao.update(office, view.id);

@@ -52,5 +52,5 @@ public class UserView {
     public String citizenshipCode;
 
     @ApiModelProperty(value = "Is user's document identified?", example = "true")
-    public boolean isIdentified;
+    public Boolean isIdentified;
 }

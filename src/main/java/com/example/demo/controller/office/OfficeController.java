@@ -78,7 +78,7 @@ public class OfficeController {
     })
     @PostMapping(value = "/update", consumes = "application/json")
     public @ResponseBody
-    SuccessView update(@RequestBody OfficeUpdView office) {
+    SuccessView update(@RequestBody OfficeView office) {
         return officeService.update(office);
     }
 
@@ -94,7 +94,7 @@ public class OfficeController {
             @ApiResponse(code = 500, message = "Failure")})
     @PostMapping(value = "/save", consumes = "application/json")
     public @ResponseBody
-    SuccessView addNewOffice(@RequestBody OfficeSaveView office) {
+    SuccessView addNewOffice(@RequestBody OfficeView office) {
         return officeService.add(office);
     }
 }

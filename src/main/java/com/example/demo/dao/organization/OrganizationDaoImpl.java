@@ -38,6 +38,17 @@ public class OrganizationDaoImpl implements OrganizationDao {
         return em.find(Organization.class, id);
     }
 
+    @Override
+    public Organization loadByName(String name) {
+        List<Organization> all=all();
+        Organization orgNamed=null;
+        for(Organization org:all){
+            if(org.getName().equals(name)){
+                orgNamed=org;
+            }
+        }
+        return orgNamed;
+    }
     /**
      * {@inheritDoc}
      */
@@ -50,15 +61,19 @@ public class OrganizationDaoImpl implements OrganizationDao {
      * {@inheritDoc}
      */
     @Override
-    public void update(Organization organization,Long id)  {
-        Organization originalOrg=em.find(Organization.class,id);
+    public void update(Organization organization, Long id) {
+        Organization originalOrg = em.find(Organization.class, id);
         originalOrg.setName(organization.getName());
-        originalOrg.setFull_name(organization.getFullName());
+        originalOrg.setFullName(organization.getFullName());
         originalOrg.setInn(organization.getInn());
         originalOrg.setKpp(organization.getKpp());
         originalOrg.setAddress(organization.getAddress());
-        if (organization.getPhone()!=null){originalOrg.setPhone(organization.getPhone());}
-        if (organization.getIs_active()){originalOrg.setIsActive(organization.getIs_active());}
+        if (organization.getPhone() != null) {
+            originalOrg.setPhone(organization.getPhone());
+        }
+        if (organization.getIs_active()) {
+            originalOrg.setIsActive(organization.getIs_active());
+        }
         em.flush();
     }
 

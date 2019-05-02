@@ -38,6 +38,6 @@ public interface UserService {
      * Обновить user по идентификатору
      * @param user
      */
-    SuccessView update(@Valid UserUpdView user);
+    SuccessView update(@Valid UserView user);
 
 }

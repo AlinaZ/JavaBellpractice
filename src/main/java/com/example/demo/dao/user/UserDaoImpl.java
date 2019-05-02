@@ -50,17 +50,29 @@ public class UserDaoImpl implements UserDao {
      * {@inheritDoc}
      */
     @Override
-    public void update(User user, Long id)  {
-        User originalUser=em.find(User.class,id);
+    public void update(User user, Long id) {
+        User originalUser = em.find(User.class, id);
         originalUser.setFirstName(user.getFirstName());
-        if(user.getLastName()!=null){originalUser.setLastName(user.getLastName());}
-        if(user.getMiddleName()!=null){originalUser.setMiddleName(user.getMiddleName());}
+        if (user.getLastName() != null) {
+            originalUser.setLastName(user.getLastName());
+        }
+        if (user.getMiddleName() != null) {
+            originalUser.setMiddleName(user.getMiddleName());
+        }
         originalUser.setPosition(user.getPosition());
-        if(user.getOffice()!=null){originalUser.setOffice(user.getOffice());}
-        if(user.getCountry()!=null){originalUser.setCountry(user.getCountry());}
+        if (user.getOffice() != null) {
+            originalUser.setOffice(user.getOffice());
+        }
+        if (user.getCountry() != null) {
+            originalUser.setCountry(user.getCountry());
+        }
         originalUser.setDocument(user.getDocument());
-        if(user.getPhone()!=null){originalUser.setPhone(user.getPhone());}
-        originalUser.setIsIdentified(user.getIsIdentified());
+        if (user.getPhone() != null) {
+            originalUser.setPhone(user.getPhone());
+        }
+        if(user.getIsIdentified()!=null) {
+            originalUser.setIsIdentified(user.getIsIdentified());
+        }
         em.flush();
     }
 }

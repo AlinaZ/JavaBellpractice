@@ -19,7 +19,7 @@ public interface OfficeService {
      *
      * @param office
      */
-    SuccessView add(@Valid OfficeSaveView office);
+    SuccessView add(@Valid OfficeView office);
 
     /**
      * Получить список offices
@@ -38,5 +38,5 @@ public interface OfficeService {
      * Обновить office по идентификатору
      * @param office
      */
-    SuccessView update(@Valid OfficeUpdView office);
+    SuccessView update(@Valid OfficeView office);
 }

@@ -9,7 +9,6 @@ import javax.validation.constraints.*;
 @ApiModel(description = "organizations")
 public class OrganizationView {
 
-    @NotEmpty
     @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")
     public Long id;
 
@@ -38,10 +37,5 @@ public class OrganizationView {
     public String phone;
 
     @ApiModelProperty(value = "Is organization active?", example = "1")
-    public boolean isActive;
-
-    @Override
-    public String toString() {
-        return "{i1d:" + id + "\n" + ";name:" + name + "\n" + ";full_name:" + fullName + "\n" + ";inn:" + inn + "\n" + ";kpp:" + kpp + "\n" + ";address:" + address + "\n" + ";phone:" + phone + "\n" + ";is_active:" + isActive + "}";
-    }
+    public Boolean isActive;
 }

@@ -118,7 +118,7 @@ public class Organization {
         return fullName;
     }
 
-    public void setFull_name(String fullName) {
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 

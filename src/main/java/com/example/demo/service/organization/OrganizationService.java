@@ -18,7 +18,7 @@ public interface OrganizationService {
      *
      * @param organization
      */
-    SuccessView add(@Valid OrgSaveView organization);
+    SuccessView add(@Valid OrganizationView organization);
 
     /**
      * Получить список organizations
@@ -39,6 +39,6 @@ public interface OrganizationService {
      * @param organization
      *
      */
-    SuccessView update(@Valid OrgUpdView organization);
+    SuccessView update(@Valid OrganizationView organization);
 
 }

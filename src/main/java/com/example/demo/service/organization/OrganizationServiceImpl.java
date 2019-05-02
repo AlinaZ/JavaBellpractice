@@ -1,9 +1,8 @@
 package com.example.demo.service.organization;
 
 import com.example.demo.dao.organization.OrganizationDao;
-import com.example.demo.exceptionhandler.OrgException;
+import com.example.demo.exceptionhandler.CustomException;
 import com.example.demo.model.Organization;
-import com.example.demo.model.mapper.MapperFacade;
 import com.example.demo.view.SuccessView;
 import com.example.demo.view.organization.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,25 +31,14 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public SuccessView add(OrgSaveView view) {
+    public SuccessView add(OrganizationView view) {
         Organization organization = new Organization();
-        if (view.name == null) {
-            throw new OrgException("Не задано название организации");
-        }
-        if (view.fullName == null) {
-            throw new OrgException("Не задано полное название организации");
-        }
-        if (view.inn == null) {
-            throw new OrgException("Не задан inn организации");
-        }
-        if (view.kpp == null) {
-            throw new OrgException("Не задан kpp организации");
-        }
+        notNullFieldsCheck(view);
         if (view.address == null) {
-            throw new OrgException("Не задан адрес организации");
+            throw new CustomException("Не задан адрес организации");
         } else {
             organization.setName(view.name);
-            organization.setFull_name(view.fullName);
+            organization.setFullName(view.fullName);
             organization.setInn(view.inn);
             organization.setKpp(view.kpp);
             organization.setAddress(view.address);
@@ -59,10 +47,10 @@ public class OrganizationServiceImpl implements OrganizationService {
             } else {
                 organization.setPhone("Не задан");
             }
-            if (view.isActive) {
+            if (view.isActive!=null) {
                 organization.setIsActive(view.isActive);
             } else {
-                organization.setIsActive(true);
+                organization.setIsActive(false);
             }
             dao.save(organization);
         }
@@ -78,7 +66,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<Organization> all = dao.all();
         List<Organization> result = new ArrayList<>();
         if (view.name == null) {
-            throw new OrgException("Не задано имя организации");
+            throw new CustomException("Не задано имя организации");
         } else {
             for (Organization org : all) {
                 boolean compare;
@@ -88,9 +76,9 @@ public class OrganizationServiceImpl implements OrganizationService {
                     boolean compareInn = org.getInn().equals(view.inn);
                     compare = compare && compareInn;
                 }
-                if (view.isActive) {
-                    boolean compareIsActive = org.getIs_active() == view.isActive;
-                    compare = compare && view.isActive;
+                if (view.isActive!=null) {
+                    boolean compareIsActive = (org.getIs_active() == view.isActive);
+                    compare = compare && compareIsActive;
                 }
                 if (compare) {
                     result.add(org);
@@ -122,7 +110,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         if (orgById != null) {
             return mapOrganization().apply(orgById);
         } else {
-            throw new OrgException("Нет организации с Id=" + id);
+            throw new CustomException("Нет организации с Id=" + id);
         }
     }
 
@@ -146,40 +134,44 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     @Transactional
-    public SuccessView update(OrgUpdView view) {
-        if (view.id == null) throw new OrgException("Невозможно обновить организацию: не задан ID");
+    public SuccessView update(OrganizationView view) {
+        if (view.id == null) throw new CustomException("Невозможно обновить организацию: не задан ID");
         if (dao.loadById(view.id) == null) {
-            throw new OrgException("Организации, которую вы пытаетесь обновить, нет в базе, id=" + view.id);
+            throw new CustomException("Организации, которую вы пытаетесь обновить, нет в базе, id=" + view.id);
         }
-        if (view.name == null) {
-            throw new OrgException("Не задано название организации");
-        }
-        if (view.fullName == null) {
-            throw new OrgException("Не задано полное название организации");
-        }
-        if (view.inn == null) {
-            throw new OrgException("Не задан inn организации");
-        }
-        if (view.kpp == null) {
-            throw new OrgException("Не задан kpp организации");
-        }
+        notNullFieldsCheck(view);
         if (view.address == null) {
-            throw new OrgException("Не задан адрес организации");
+            throw new CustomException("Не задан адрес организации");
         } else {
             Organization organization = new Organization();
             organization.setName(view.name);
-            organization.setFull_name(view.fullName);
+            organization.setFullName(view.fullName);
             organization.setInn(view.inn);
             organization.setKpp(view.kpp);
             organization.setAddress(view.address);
             if (view.phone != null) {
                 organization.setPhone(view.phone);
             }
-            if (view.isActive) {
+            if (view.isActive!=null) {
                 organization.setIsActive(view.isActive);
             }
             dao.update(organization, view.id);
         }
         return new SuccessView();
+    }
+
+    private void notNullFieldsCheck(OrganizationView view){
+        if (view.name == null) {
+            throw new CustomException("Не задано название организации");
+        }
+        if (view.fullName == null) {
+            throw new CustomException("Не задано полное название организации");
+        }
+        if (view.inn == null) {
+            throw new CustomException("Не задан inn организации");
+        }
+        if (view.kpp == null) {
+            throw new CustomException("Не задан kpp организации");
+        }
     }
 }

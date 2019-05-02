@@ -79,7 +79,7 @@ public class OrganizationController {
     })
     @PostMapping(value = "/update", consumes = "application/json")
     public @ResponseBody
-    SuccessView updateOrgById(@RequestBody OrgUpdView organization) {
+    SuccessView updateOrgById(@RequestBody OrganizationView organization) {
         return organizationService.update(organization);
     }
 
@@ -96,7 +96,7 @@ public class OrganizationController {
     })
     @PostMapping(value = "/save", consumes = "application/json")
     public @ResponseBody
-    SuccessView addNewOrg(@RequestBody OrgSaveView organization) {
+    SuccessView addNewOrg(@RequestBody OrganizationView organization) {
         return organizationService.add(organization);
     }
 }

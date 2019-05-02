@@ -23,6 +23,8 @@ public interface OrganizationDao {
      */
     Organization loadById(Long id);
 
+    Organization loadByName(String name);
+
     /**
      * Сохранить Organization
      *

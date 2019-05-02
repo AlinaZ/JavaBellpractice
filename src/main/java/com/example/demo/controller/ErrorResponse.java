@@ -4,15 +4,15 @@ public class ErrorResponse {
 
     private String message;
 
-    public ErrorResponse(String error) {
-        this.message = error;
+    public ErrorResponse(String message) {
+        this.message = message;
     }
 
-    public String getError() {
+    public String getMessage() {
         return message;
     }
 
-    public void setError(String error) {
-        this.message = error;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

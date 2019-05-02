@@ -69,7 +69,7 @@ public class User {
      * Подтвержден ли документ
      */
     @Column(name = "is_identified", nullable = false)
-    private boolean isIdentified;
+    private Boolean isIdentified;
 
     /**
      * Офис, в котором работает сотрудникб связь с Office
@@ -179,7 +179,7 @@ public class User {
         this.document = document;
     }
 
-    public boolean getIsIdentified() {
+    public Boolean getIsIdentified() {
         return isIdentified;
     }
 

@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 @ControllerAdvice(basePackages = "com.example.demo")
-public class JSONResponseWrapper implements ResponseBodyAdvice {@Override
-public boolean supports(MethodParameter methodParameter, Class aClass) {
-    return true;
-}
+public class JSONResponseWrapper implements ResponseBodyAdvice<Object> {
+    @Override
+    public boolean supports(MethodParameter methodParameter, Class aClass) {
+        return true;
+    }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
 
         final HttpServletResponse servletResponse = ((ServletServerHttpResponse) serverHttpResponse).getServletResponse();
+        System.out.println("******************************************************************************************");
 
         if (servletResponse.getStatus() != 200) {
             return new ErrorWrapper<Object>(body);

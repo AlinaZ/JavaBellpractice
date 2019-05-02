@@ -15,7 +15,7 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
 
     private final Logger log = LoggerFactory.getLogger(ExceptionsHandler.class);
 
-    @ExceptionHandler({OrgException.class, OfficeException.class, UserException.class})
+    @ExceptionHandler({CustomException.class})
     protected @ResponseBody
     ResponseEntity<?> handleCustomExceptions(RuntimeException e) {
         log.error(e.getMessage(), e.getCause());
@@ -23,8 +23,9 @@ public class ExceptionsHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({Exception.class})
-    protected @ResponseBody ResponseEntity<?> handleAllOtherExceptions(Exception e) {
+    protected @ResponseBody
+    ResponseEntity<?> handleAllOtherExceptions(Exception e) {
         log.error(e.getMessage(), e);
-        return new ResponseEntity<> (new ErrorResponse("Internal Server Error"),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new ErrorResponse("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

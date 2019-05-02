@@ -13,5 +13,5 @@ public class OrgsListInView {
 
     public String inn;
 
-    public boolean isActive;
+    public Boolean isActive;
 }

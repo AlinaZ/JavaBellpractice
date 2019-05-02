@@ -52,12 +52,16 @@ public class OfficeDaoImpl implements OfficeDao {
      * {@inheritDoc}
      */
     @Override
-    public void update(Office office, Long id)  {
-        Office originalOffice=em.find(Office.class,id);
+    public void update(Office office, Long id) {
+        Office originalOffice = em.find(Office.class, id);
         originalOffice.setName(office.getName());
         originalOffice.setAddress(office.getAddress());
-        if(office.getPhone()!=null){originalOffice.setPhone(office.getPhone());}
-        if(office.getIs_active()){originalOffice.setIs_active(office.getIs_active());}
+        if (office.getPhone() != null) {
+            originalOffice.setPhone(office.getPhone());
+        }
+        if (office.getIs_active()) {
+            originalOffice.setIs_active(office.getIs_active());
+        }
         em.flush();
     }
 }

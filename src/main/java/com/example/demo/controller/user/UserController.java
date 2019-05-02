@@ -81,7 +81,7 @@ public class UserController {
             @ApiResponse(code = 500, message = "Failure")})
     @PostMapping(value = "/update", consumes = "application/json")
     public @ResponseBody
-    SuccessView update(@RequestBody UserUpdView user) {
+    SuccessView update(@RequestBody UserView user) {
         return userService.update(user);
     }
 

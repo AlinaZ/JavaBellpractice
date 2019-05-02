@@ -5,7 +5,7 @@ import com.example.demo.dao.doctype.DocTypeDao;
 import com.example.demo.dao.document.DocumentDao;
 import com.example.demo.dao.office.OfficeDao;
 import com.example.demo.dao.user.UserDao;
-import com.example.demo.exceptionhandler.UserException;
+import com.example.demo.exceptionhandler.CustomException;
 import com.example.demo.model.*;
 import com.example.demo.view.SuccessView;
 import com.example.demo.view.user.*;
@@ -47,13 +47,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public SuccessView add(UserSaveView view) {
         if (view.officeId == null) {
-            throw new UserException("Не задан идентификатор офиса, за которым закреплен сотрудник");
+            throw new CustomException("Не задан идентификатор офиса, за которым закреплен сотрудник");
         }
         if (view.firstName == null) {
-            throw new UserException("Не задано имя сотрудника");
+            throw new CustomException("Не задано имя сотрудника");
         }
         if (view.position == null) {
-            throw new UserException("Не задана должность сотрудника");
+            throw new CustomException("Не задана должность сотрудника");
         } else {
             User user = new User();
             user.setFirstName(view.firstName);
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
             if (view.docCode != null) {
                 DocType dctByCode = dctD.loadByCode(view.docCode);
                 if (dctByCode == null) {
-                    throw new UserException("Нет типа документа с таким кодом");
+                    throw new CustomException("Нет типа документа с таким кодом");
                 } else {
                     userdoc.setDoctype(dctByCode);
                 }
@@ -92,32 +92,21 @@ public class UserServiceImpl implements UserService {
             if (view.docName != null) {
                 DocType dctByName = dctD.loadByName(view.docName);
                 if (dctByName == null) {
-                    throw new UserException("Нет типа документа с таким названием");
+                    throw new CustomException("Нет типа документа с таким названием");
                 } else {
                     userdoc.setDoctype(dctByName);
                 }
             }
             if (view.docCode != null && view.docName != null) {
                 if (!(dctD.loadByCode(view.docCode).equals(dctD.loadByName(view.docName)))) {
-                    throw new UserException("Код и название типа документа не соответствуют");
+                    throw new CustomException("Код и название типа документа не соответствуют");
                 }
             }
             if (view.docCode == null && view.docName == null){
-                throw new UserException("Нельзя определить тип документа сотрудника");
+                throw new CustomException("Нельзя определить тип документа сотрудника");
             }
-             user.setDocument(userdoc);
-            if (view.citizenshipCode != null) {
-                if (countryD.loadByCode(view.citizenshipCode) == null) {
-                    throw new UserException("В справочнике Страны нет такой страны");
-                } else {
-                    user.setCountry(countryD.loadByCode(view.citizenshipCode));
-                }
-            }
-            if (view.isIdentified) {
-                user.setIsIdentified(true);
-            } else {
-                user.setIsIdentified(false);
-            }
+            user.setDocument(userdoc);
+            userFieldsCheck(user,view);
             dao.save(user);
         }
         return new SuccessView();
@@ -132,7 +121,7 @@ public class UserServiceImpl implements UserService {
         List<User> all = dao.all();
         List<User> result = new ArrayList<>();
         if (view.officeId == null) {
-            throw new UserException("Не задан Id офиса, за которым закреплен сотрудник");
+            throw new CustomException("Не задан Id офиса, за которым закреплен сотрудник");
         } else {
             for (User user : all) {
                 boolean compare;
@@ -194,7 +183,7 @@ public class UserServiceImpl implements UserService {
         if (userById != null) {
             return mapUser().apply(userById);
         } else {
-            throw new UserException("Нет сотрудника с Id=" + id);
+            throw new CustomException("Нет сотрудника с Id=" + id);
         }
     }
 
@@ -222,16 +211,16 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public SuccessView update(UserUpdView view) {
-        if (view.id == null) throw new UserException("Невозможно обновить сотрудника: не задан ID");
+    public SuccessView update(UserView view) {
+        if (view.id == null) throw new CustomException("Невозможно обновить сотрудника: не задан ID");
         if (dao.loadById(view.id) == null) {
-            throw new UserException("Сотрудника, которого вы пытаетесь обновить, нет в базе, id=" + view.id);
+            throw new CustomException("Сотрудника, которого вы пытаетесь обновить, нет в базе, id=" + view.id);
         } else {
             if (view.firstName == null) {
-                throw new UserException("Не задано имя обновляемого сотруника");
+                throw new CustomException("Не задано имя обновляемого сотруника");
             }
             if (view.position == null) {
-                throw new UserException("Не задана должность обновляемого сотруника");
+                throw new CustomException("Не задана должность обновляемого сотруника");
             } else {
                 User user = new User();
                 user.setFirstName(view.firstName);
@@ -249,7 +238,7 @@ public class UserServiceImpl implements UserService {
                 if (view.phone != null) {
                     user.setPhone(view.phone);
                 }
-                Document userdoc = new Document();
+                Document userDoc = new Document();
                 if (view.docNumber != null) {
                     //если в базе есть такой документ (по номеру) - присваиваем его сотруднику
                     if (docD.loadByNumber(view.docNumber) != null) {
@@ -257,52 +246,49 @@ public class UserServiceImpl implements UserService {
                    }
                     //если задан номер, и такого документа нет, присваиваем номер и остальные допустимые параметры новому документу
                     else {
-                        userdoc.setNumber(view.docNumber);
-                        if (view.docDate != null) {
-                            userdoc.setDate(view.docDate);
-                        }
-                        if (view.docName != null) {
-                            if (dctD.loadByName(view.docName) == null) {
-                                throw new UserException("В справочнике Виды документов нет такого документа");
-                            } else {
-                                userdoc.setDoctype(dctD.loadByName(view.docName));
-                            }
-                        }
-                        //присваваиваем  новый документ сотруднику
-                        user.setDocument(userdoc);
+                        userDoc.setNumber(view.docNumber);
+                        userDocDateNameCheck(user,userDoc,view);
                     }
                 }
                 //если номер не задан, присваиваем остальные допустимые параметры новому документу
                else {
-                   userdoc.setNumber("не задан");
-                    if (view.docDate != null) {
-                        userdoc.setDate(view.docDate);
-                    }
-                    if (view.docName != null) {
-                        if (dctD.loadByName(view.docName) == null) {
-                            throw new UserException("В справочнике Виды документов нет такого документа");
-                        } else {
-                            userdoc.setDoctype(dctD.loadByName(view.docName));
-                        }
-                    }
-                    //присваиваем документ сотруднику
-                    user.setDocument(userdoc);
+                   userDoc.setNumber("не задан");
+                   userDocDateNameCheck(user,userDoc,view);
                 }
-                if (view.citizenshipCode != null) {
-                    if (countryD.loadByCode(view.citizenshipCode) == null) {
-                        throw new UserException("В справочнике Страны нет такой страны");
-                    } else {
-                        user.setCountry(countryD.loadByCode(view.citizenshipCode));
-                    }
-                }
-                if (view.isIdentified) {
-                    user.setIsIdentified(true);
-                } else {
-                    user.setIsIdentified(false);
-                }
+                userFieldsCheck(user,view);
                 dao.update(user, view.id);
             }
         }
         return new SuccessView();
     }
+
+    private void userDocDateNameCheck (User user, Document userDoc, UserView view){
+        if (view.docDate != null) {
+            userDoc.setDate(view.docDate);
+        }
+        if (view.docName != null) {
+            if (dctD.loadByName(view.docName) == null) {
+                throw new CustomException("В справочнике Виды документов нет такого документа");
+            } else {
+                userDoc.setDoctype(dctD.loadByName(view.docName));
+            }
+        }
+        user.setDocument(userDoc);
+    }
+
+    private void userFieldsCheck(User user,UserView view){
+        if (view.citizenshipCode != null) {
+            if (countryD.loadByCode(view.citizenshipCode) == null) {
+                throw new CustomException("В справочнике Страны нет такой страны");
+            } else {
+                user.setCountry(countryD.loadByCode(view.citizenshipCode));
+            }
+        }
+        if (view.isIdentified!=null) {
+            user.setIsIdentified(view.isIdentified);
+        } else {
+            user.setIsIdentified(false);
+        }
+    }
+
 }
