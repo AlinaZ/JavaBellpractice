@@ -1,7 +1,7 @@
 package com.example.demo.service.organization;
 
-import com.example.demo.model.Organization;
-import com.example.demo.view.organization.OrganizationView;
+import com.example.demo.view.SuccessView;
+import com.example.demo.view.organization.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -18,14 +18,14 @@ public interface OrganizationService {
      *
      * @param organization
      */
-    void add(@Valid OrganizationView organization);
+    SuccessView add(@Valid OrgSaveView organization);
 
     /**
      * Получить список organizations
-     *
+     * по параметрам name, inn, isActive
      * @return {@Organization}
      */
-    List<OrganizationView> organizations();
+    List<OrgsListOutView> orgsFilter(OrgsListInView view);
 
     /**
      * Получить организацию по идентификатору
@@ -37,8 +37,8 @@ public interface OrganizationService {
     /**
      * Обновить организацию по идентификатору
      * @param organization
-     * @param id
+     *
      */
-    void update(@Valid OrganizationView organization,Long id);
+    SuccessView update(@Valid OrgUpdView organization);
 
 }

@@ -42,6 +42,21 @@ public class DocumentDaoImpl implements DocumentDao {
      * {@inheritDoc}
      */
     @Override
+    public Document loadByNumber(String number) {
+        List<Document> all=all();
+        Document doc=null;
+        for(Document dct:all){
+            if(dct.getNumber().equals(number)){
+                doc=dct;
+            }
+        }
+        return doc;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void save(Document document) {
         em.persist(document);
     }

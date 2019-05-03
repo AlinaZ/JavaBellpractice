@@ -6,17 +6,14 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.*;
 
 @ApiModel(description = "offices")
-public class OfficeView {
+public class OfficeUpdView {
 
     @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")
-    public String id;
+    public Long id;
 
     @Size(max = 20)
     @ApiModelProperty(value = "Office name", example = "83472777877")
     public String name;
-
-    @ApiModelProperty
-    public String orgId;
 
     @Size(max = 250)
     @ApiModelProperty(value = "Office address", example = "Свердлова, 92")

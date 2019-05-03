@@ -38,6 +38,18 @@ public class CountryDaoImpl implements CountryDao {
         return em.find(Country.class, id);
     }
 
+
+    @Override
+    public Country loadByCode(String code) {
+        List<Country> all=all();
+        Country countryCoded=null;
+        for(Country c:all){
+            if(c.getCode().equals(code)){
+                countryCoded=c;
+            }
+        }
+        return countryCoded;
+    }
     /**
      * {@inheritDoc}
      */

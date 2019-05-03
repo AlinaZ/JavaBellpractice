@@ -1,8 +1,6 @@
 package com.example.demo.view.user;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -10,8 +8,7 @@ import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.time.LocalDate;
 
-@ApiModel(description = "users")
-public class UserView {
+public class UserUpdView {
 
     @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")
     public Long id;

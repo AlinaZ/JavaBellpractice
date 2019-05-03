@@ -7,9 +7,8 @@ import javax.validation.constraints.*;
 
 
 @ApiModel(description = "organizations")
-public class OrganizationView {
+public class OrgUpdView {
 
-    @NotEmpty
     @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")
     public Long id;
 
@@ -42,6 +41,6 @@ public class OrganizationView {
 
     @Override
     public String toString() {
-        return "{i1d:" + id + "\n" + ";name:" + name + "\n" + ";full_name:" + fullName + "\n" + ";inn:" + inn + "\n" + ";kpp:" + kpp + "\n" + ";address:" + address + "\n" + ";phone:" + phone + "\n" + ";is_active:" + isActive + "}";
+        return "{i1d:" + id + "\n"+";name:" + name + "\n"+";full_name:" + fullName + "\n"+ ";inn:" + inn + "\n"+";kpp:" + kpp +"\n"+";address:" + address+"\n"+";phone:" + phone+"\n"+";is_active:" + isActive+"}";
     }
 }

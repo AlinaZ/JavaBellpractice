@@ -7,11 +7,7 @@ import javax.validation.constraints.*;
 
 
 @ApiModel(description = "organizations")
-public class OrganizationView {
-
-    @NotEmpty
-    @ApiModelProperty(value = "Уникальный идентификатор", hidden = true, example = "1")
-    public Long id;
+public class OrgSaveView {
 
     @Size(max = 100)
     @ApiModelProperty(value = "Organization name", example = "Bellintegrator")
@@ -30,6 +26,7 @@ public class OrganizationView {
     public String kpp;
 
     @Size(max = 250)
+    @NotEmpty(message = "address cannot be null")
     @ApiModelProperty(value = "Organization address", example = "Свердлова, 92")
     public String address;
 
@@ -37,11 +34,13 @@ public class OrganizationView {
     @ApiModelProperty(value = "Organization phone", example = "83472777877")
     public String phone;
 
+    @NotNull(message = "")
     @ApiModelProperty(value = "Is organization active?", example = "1")
     public boolean isActive;
 
     @Override
     public String toString() {
-        return "{i1d:" + id + "\n" + ";name:" + name + "\n" + ";full_name:" + fullName + "\n" + ";inn:" + inn + "\n" + ";kpp:" + kpp + "\n" + ";address:" + address + "\n" + ";phone:" + phone + "\n" + ";is_active:" + isActive + "}";
+        return "{name:" + name + "\n"+";full_name:" + fullName + "\n"+ ";inn:" + inn + "\n"+";kpp:" + kpp +"\n"+";address:" + address+"\n"+";phone:" + phone+"\n"+";is_active:" + isActive+"}";
     }
 }
+

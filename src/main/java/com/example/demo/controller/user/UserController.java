@@ -1,7 +1,8 @@
 package com.example.demo.controller.user;
 
 import com.example.demo.service.user.UserService;
-import com.example.demo.view.user.UserView;
+import com.example.demo.view.SuccessView;
+import com.example.demo.view.user.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -13,7 +14,7 @@ import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@Api(value="UserController", description="Управляет информацией об организациях")
+@Api(value = "UserController", description = "Управляет информацией об организациях")
 @RestController
 @RequestMapping(value = "/api/user", produces = APPLICATION_JSON_VALUE)
 
@@ -28,13 +29,27 @@ public class UserController {
     }
 
     /**
-     * Получить список всех сотрудников
+     * Получить список сотрудников
+     * по параметрам
+     * “officeId”:””, //обязательный параметр
+     * “firstName”:””,
+     * “lastName”:””,
+     * “middleName”:””,
+     * “position”,””,
+     * “docCode”:””,
+     * “citizenshipCode”:””
+     *
      * @return
      */
-    @ApiOperation(value = "Получить список всех сотрудников", httpMethod = "GET")
-    @GetMapping("/list")
-    public List<UserView> users() {
-        return userService.users();
+    @ApiOperation(value = "Получить список сотрудников по параметрам", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @PostMapping(value = "/list", consumes = "application/json", produces = "application/json")
+    public @ResponseBody
+    List<UserListOutView> users(@RequestBody UserListInView view) {
+        return userService.userFilter(view);
     }
 
     /**
@@ -44,21 +59,30 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "Получить сотрудника по Id", httpMethod = "GET")
-    @GetMapping(value = "/{id}", headers = "Accept=application/json")
-    public UserView getUserById(@PathVariable Long id) {
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public @ResponseBody
+    UserView getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     /**
-     * Обновить существующ сотрудника (по Id)
+     * Обновить существующег сотрудника
      *
      * @param user
-     * @param id
      */
-    @ApiOperation(value = "Обновить офис по Id", httpMethod = "POST")
-    @PostMapping(value = "/{id}", headers = "Accept=application/json")
-    public void updateUserById(@RequestBody UserView user, @PathVariable Long id) {
-        userService.update(user, id);
+    @ApiOperation(value = "Обновить сотрудника", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @PostMapping(value = "/update", consumes = "application/json")
+    public @ResponseBody
+    SuccessView update(@RequestBody UserUpdView user) {
+        return userService.update(user);
     }
 
     /**
@@ -71,8 +95,9 @@ public class UserController {
             @ApiResponse(code = 200, message = "Success", response = String.class),
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")})
-    @PostMapping("/save")
-    public void addNewOrg(@RequestBody UserView user) {
-        userService.add(user);
+    @PostMapping(value = "/save", consumes = "application/json")
+    public @ResponseBody
+    SuccessView addNewOrg(@RequestBody UserSaveView user) {
+        return userService.add(user);
     }
 }

@@ -23,6 +23,8 @@ public interface CountryDao {
      */
     Country loadById(Long id);
 
+    Country loadByCode(String code);
+
     /**
      * Сохранить Country
      *

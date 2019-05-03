@@ -1,17 +1,11 @@
 package com.example.demo.model;
 
 
-import javax.persistence.Id;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.Version;
-import javax.persistence.ManyToOne;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
+
+
+import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 
 /**
@@ -45,7 +39,8 @@ public class Document {
      * Дата выдачи документа
      */
     @Column(name = "date", nullable = false)
-    private Date date;
+    @Temporal(value = TemporalType.DATE)
+    private LocalDate date;
 
     /**
      * Типа документа, связь с DocType
@@ -62,7 +57,7 @@ public class Document {
 
     }
 
-    public Document(DocType doctype, String number, Date date) {
+    public Document(DocType doctype, String number, LocalDate date) {
         this.doctype = doctype;
         this.number = number;
         this.date = date;
@@ -89,11 +84,11 @@ public class Document {
         this.number = number;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

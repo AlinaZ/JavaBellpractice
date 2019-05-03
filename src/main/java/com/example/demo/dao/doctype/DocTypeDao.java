@@ -23,6 +23,10 @@ public interface DocTypeDao {
      */
     DocType loadById(Long id);
 
+    DocType loadByName(String name);
+
+    DocType loadByCode(String code);
+
     /**
      * Сохранить DocType
      *

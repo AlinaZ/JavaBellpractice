@@ -53,13 +53,13 @@ public class UserDaoImpl implements UserDao {
     public void update(User user, Long id)  {
         User originalUser=em.find(User.class,id);
         originalUser.setFirstName(user.getFirstName());
-        originalUser.setLastName(user.getLastName());
-        originalUser.setMiddleName(user.getMiddleName());
+        if(user.getLastName()!=null){originalUser.setLastName(user.getLastName());}
+        if(user.getMiddleName()!=null){originalUser.setMiddleName(user.getMiddleName());}
         originalUser.setPosition(user.getPosition());
-        originalUser.setOffice(user.getOffice());
-        originalUser.setCountry(user.getCountry());
+        if(user.getOffice()!=null){originalUser.setOffice(user.getOffice());}
+        if(user.getCountry()!=null){originalUser.setCountry(user.getCountry());}
         originalUser.setDocument(user.getDocument());
-        originalUser.setPhone(user.getPhone());
+        if(user.getPhone()!=null){originalUser.setPhone(user.getPhone());}
         originalUser.setIsIdentified(user.getIsIdentified());
         em.flush();
     }

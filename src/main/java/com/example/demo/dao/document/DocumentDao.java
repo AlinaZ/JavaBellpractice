@@ -24,6 +24,15 @@ public interface DocumentDao {
     Document loadById(Long id);
 
     /**
+         * Получить Document по номеру док та
+     *
+     * @param number
+     * @return
+     */
+
+    Document loadByNumber(String number);
+
+    /**
      * Сохранить Document
      *
      * @param document

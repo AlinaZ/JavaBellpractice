@@ -33,7 +33,7 @@ public interface OrganizationDao {
     /**
      * Обновить организацию по Id
      * @param organization
-     * @param id
+     *
      */
     void update(Organization organization,Long id);
 }

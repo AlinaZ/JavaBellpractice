@@ -81,9 +81,9 @@ public class Organization {
      * Офисы организации
      */
 
-    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL,
+  /*  @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL,
             orphanRemoval = true)
-    private Set<Office> offices;
+    private Set<Office> offices;*/
 
     /**
      * Конструктор для hibernate
@@ -162,25 +162,25 @@ public class Organization {
         this.isActive = isActive;
     }
 
-    public Set<Office> getOffices() {
+  /*  public Set<Office> getOffices() {
         if (offices == null) {
             offices = new HashSet<>();
         }
         return offices;
-    }
+    }*/
 
-    public void setOffices(Set<Office> offices) {
+   /* public void setOffices(Set<Office> offices) {
         this.offices = offices;
-    }
+    }*/
 
-    public void addOffice(Office office) {
+  /*  public void addOffice(Office office) {
         getOffices().add(office);
         office.setOrganization(this);
     }
-
+*//*
     public void removeOffice(Office office) {
         getOffices().remove(office);
         office.setOrganization(null);
-    }
+    }*/
 
 }

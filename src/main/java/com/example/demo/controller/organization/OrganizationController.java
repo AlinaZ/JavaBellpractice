@@ -1,8 +1,8 @@
 package com.example.demo.controller.organization;
 
-import com.example.demo.model.Organization;
+import com.example.demo.view.SuccessView;
+import com.example.demo.view.organization.*;
 import com.example.demo.service.organization.OrganizationService;
-import com.example.demo.view.organization.OrganizationView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -30,13 +30,21 @@ public class OrganizationController {
 
     /**
      * Возвращает список организаций
+     * по параметрам name, inn, isAcitve
      *
      * @return
      */
-    @ApiOperation(value = "Получить список всех организаций", httpMethod = "GET")
-    @GetMapping("/list")
-    public List<OrganizationView> organizations() {
-        return organizationService.organizations();
+    @ApiOperation(value = "Получить список организаций по параметрам", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 400, message = "Not found"),
+            @ApiResponse(code = 500, message = "Failure")
+    })
+    @PostMapping(value = "/list", consumes = "application/json", produces = "application/json")
+    public @ResponseBody
+    List<OrgsListOutView> getOrgsByParams(@RequestBody OrgsListInView view) {
+        List<OrgsListOutView> orgs = organizationService.orgsFilter(view);
+        return orgs;
     }
 
     /**
@@ -46,21 +54,33 @@ public class OrganizationController {
      * @return
      */
     @ApiOperation(value = "Получить организацию по Id", httpMethod = "GET")
-    @GetMapping(value = "/{id}", headers = "Accept=application/json")
-    public OrganizationView getOrgById(@PathVariable Long id) {
-        return organizationService.getOrgById(id);
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 400, message = "Not found"),
+            @ApiResponse(code = 500, message = "Failure")
+    })
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public @ResponseBody
+    OrganizationView getOrgById(@PathVariable Long id) {
+        OrganizationView org = organizationService.getOrgById(id);
+        return org;
     }
 
     /**
-     * Обновить существующую оганизацию (по Id)
+     * Обновить существующую оганизацию
      *
      * @param organization
-     * @param id
      */
-    @ApiOperation(value = "Обновить организацию по Id", httpMethod = "POST")
-    @PostMapping(value = "/{id}", headers = "Accept=application/json")
-    public void updateOrgById(@RequestBody OrganizationView organization, @PathVariable Long id) {
-        organizationService.update(organization, id);
+    @ApiOperation(value = "Обновить организацию", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 400, message = "Not found"),
+            @ApiResponse(code = 500, message = "Failure")
+    })
+    @PostMapping(value = "/update", consumes = "application/json")
+    public @ResponseBody
+    SuccessView updateOrgById(@RequestBody OrgUpdView organization) {
+        return organizationService.update(organization);
     }
 
     /**
@@ -71,10 +91,12 @@ public class OrganizationController {
     @ApiOperation(value = "Добавить новую организацию", httpMethod = "POST")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = String.class),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Failure")})
-    @PostMapping("/save")
-    public void addNewOrg(@RequestBody OrganizationView organization) {
-        organizationService.add(organization);
+            @ApiResponse(code = 400, message = "Not found"),
+            @ApiResponse(code = 500, message = "Failure")
+    })
+    @PostMapping(value = "/save", consumes = "application/json")
+    public @ResponseBody
+    SuccessView addNewOrg(@RequestBody OrgSaveView organization) {
+        return organizationService.add(organization);
     }
 }

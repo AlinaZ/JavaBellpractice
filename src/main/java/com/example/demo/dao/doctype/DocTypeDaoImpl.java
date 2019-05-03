@@ -39,6 +39,29 @@ public class DocTypeDaoImpl implements DocTypeDao {
         return em.find(DocType.class, id);
     }
 
+    @Override
+    public DocType loadByName(String name) {
+        List<DocType> all=all();
+        DocType dctNamed=null;
+        for(DocType dct:all){
+            if(dct.getName().equals(name)){
+                dctNamed=dct;
+            }
+        }
+        return dctNamed;
+    }
+
+    @Override
+    public DocType loadByCode(String code) {
+        List<DocType> all=all();
+        DocType dctCoded=null;
+        for(DocType dct:all){
+            if(dct.getCode().equals(code)){
+                dctCoded=dct;
+            }
+        }
+        return dctCoded;
+    }
     /**
      * {@inheritDoc}
      */

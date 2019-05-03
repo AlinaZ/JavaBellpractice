@@ -1,6 +1,7 @@
 package com.example.demo.service.user;
 
-import com.example.demo.view.user.UserView;
+import com.example.demo.view.SuccessView;
+import com.example.demo.view.user.*;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -17,14 +18,14 @@ public interface UserService {
      *
      * @param user
      */
-    void add(@Valid UserView user);
+    SuccessView add(@Valid UserSaveView user);
 
     /**
      * Получить список users
      *
      * @return {@Person}
      */
-    List<UserView> users();
+    List<UserListOutView> userFilter (@Valid UserListInView view);
 
     /**
      * Получить user по идентификатору
@@ -36,8 +37,7 @@ public interface UserService {
     /**
      * Обновить user по идентификатору
      * @param user
-     * @param id
      */
-    void update(@Valid UserView user,Long id);
+    SuccessView update(@Valid UserUpdView user);
 
 }
