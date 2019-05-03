@@ -39,8 +39,7 @@ public class Document {
      * Дата выдачи документа
      */
     @Column(name = "date", nullable = false)
-    @Temporal(value = TemporalType.DATE)
-    private LocalDate date;
+    private Date date;
 
     /**
      * Типа документа, связь с DocType
@@ -57,7 +56,7 @@ public class Document {
 
     }
 
-    public Document(DocType doctype, String number, LocalDate date) {
+    public Document(DocType doctype, String number, Date date) {
         this.doctype = doctype;
         this.number = number;
         this.date = date;
@@ -84,11 +83,11 @@ public class Document {
         this.number = number;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
             if (view.docDate != null) {
                 userdoc.setDate(view.docDate);
             }
-            else {userdoc.setDate(LocalDate.MIN);}
+            else {userdoc.setDate(Date.valueOf("1800-12-12"));}
             if (view.docCode != null) {
                 DocType dctByCode = dctD.loadByCode(view.docCode);
                 if (dctByCode == null) {
@@ -101,7 +102,7 @@ public class UserServiceImpl implements UserService {
                     throw new UserException("Код и название типа документа не соответствуют");
                 }
             }
-            if ((view.docCode == null && view.docName == null) && (view.docNumber!=null || view.docDate!=null)){
+            if (view.docCode == null && view.docName == null){
                 throw new UserException("Нельзя определить тип документа сотрудника");
             }
              user.setDocument(userdoc);

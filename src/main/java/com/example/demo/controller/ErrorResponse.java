@@ -2,17 +2,17 @@ package com.example.demo.controller;
 
 public class ErrorResponse {
 
-    private String error;
+    private String message;
 
     public ErrorResponse(String error) {
-        this.error = error;
+        this.message = error;
     }
 
     public String getError() {
-        return error;
+        return message;
     }
 
     public void setError(String error) {
-        this.error = error;
+        this.message = error;
     }
 }

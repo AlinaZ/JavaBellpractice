@@ -46,8 +46,7 @@ public class UserView {
     public String docNumber;
 
     @ApiModelProperty(value = "user's doc name", example = "1")
-    @Temporal(value = TemporalType.DATE)
-    public LocalDate docDate;
+    public Date docDate;
 
     @ApiModelProperty(value = "user's citizenship", example = "1")
     public String citizenshipCode;

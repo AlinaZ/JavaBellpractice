@@ -43,8 +43,7 @@ public class UserSaveView {
     public String docNumber;
 
     @ApiModelProperty(value = "user's doc date", example = "")
-    @Temporal(value = TemporalType.DATE)
-    public LocalDate docDate;
+    public Date docDate;
 
     @ApiModelProperty(value = "user's citizenship code", example = "1")
     public String citizenshipCode;
