@@ -40,6 +40,10 @@ public class JSONResponseWrapper implements ResponseBodyAdvice<Object> {
         public DataWrapper(Object data) {
             this.data = data;
         }
+
+        public Object getData() {
+            return data;
+        }
     }
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)

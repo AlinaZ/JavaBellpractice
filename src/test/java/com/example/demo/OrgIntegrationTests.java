@@ -1,9 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.service.organization.OrganizationServiceImpl;
 import com.example.demo.view.organization.OrganizationView;
 import com.example.demo.view.organization.OrgsListInView;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +18,27 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = DemoApplication.class)
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 public class OrgIntegrationTests {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private OrganizationDao dao;
+    private void saveTestEntity(OrganizationView view) {
+        String url = "/api/organization/save";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, view, String.class);
+    }
 
-    @Autowired
-    private OrganizationServiceImpl service;
-
-    private HttpHeaders headers;
-
-    @Before
-    public void init() {
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-
-        //repository.deleteAll();
+    private Long findTestEntity(String name) {
+        OrgsListInView orgListView = new OrgsListInView();
+        orgListView.name = name;
+        String url = "/api/organization/list";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgListView, String.class);
+        int idPointer = response.getBody().indexOf("id");
+        char idC = response.getBody().charAt(idPointer + 4);
+        Long id = Long.valueOf(Character.getNumericValue(idC));
+        return id;
     }
 
     /**
@@ -58,12 +54,11 @@ public class OrgIntegrationTests {
         orgView.kpp = "123456789";
         orgView.phone = "89191489168";
         orgView.isActive = true;
-        service.add(orgView);
-        long id = dao.loadByName("Organization name").getId();
+        saveTestEntity(orgView);
+        long id = findTestEntity("Organization name");
         String url = "/api/organization/" + id;
 
-        HttpEntity entity = new HttpEntity<>(headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         String expected = "{\"data\":" +
                 "{\"id\":" + id + "," +
                 "\"name\":\"Organization name\"," +
@@ -84,9 +79,8 @@ public class OrgIntegrationTests {
     @Test
     public void getOrgByIdFailTest() {
         String url = "/api/organization/10";
-        HttpEntity entity = new HttpEntity<>(headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
         String expected = "{\"error\":{\"message\":\"Нет организации с Id=10\"}}";
         String result = response.getBody();
@@ -106,12 +100,11 @@ public class OrgIntegrationTests {
         orgView1.kpp = "123456787";
         orgView1.phone = "89191489167";
         orgView1.isActive = true;
-        service.add(orgView1);
+        saveTestEntity(orgView1);
 
-        HttpEntity entity = new HttpEntity<>(orgView1, headers);
         String url = "/api/organization/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgView1, String.class);
 
         String expected = "{\"data\":{\"result\":\"success\"}}";
         String result = response.getBody();
@@ -131,10 +124,9 @@ public class OrgIntegrationTests {
         orgView2.kpp = "123456789";
         orgView2.phone = "89191489168";
         orgView2.isActive = true;
-        HttpEntity entity = new HttpEntity<>(orgView2, headers);
         String url = "/api/organization/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgView2, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задано название организации\"}}";
         String result = response.getBody();
@@ -154,10 +146,9 @@ public class OrgIntegrationTests {
         orgView3.kpp = "123456789";
         orgView3.phone = "89191489168";
         orgView3.isActive = true;
-        HttpEntity entity = new HttpEntity<>(orgView3, headers);
         String url = "/api/organization/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgView3, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задано полное название организации\"}}";
         String result = response.getBody();
@@ -177,10 +168,9 @@ public class OrgIntegrationTests {
         orgView3.kpp = "123456789";
         orgView3.phone = "89191489168";
         orgView3.isActive = true;
-        HttpEntity entity = new HttpEntity<>(orgView3, headers);
         String url = "/api/organization/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgView3, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задан inn организации\"}}";
         String result = response.getBody();
@@ -200,10 +190,9 @@ public class OrgIntegrationTests {
         orgView3.kpp = null;
         orgView3.phone = "89191489168";
         orgView3.isActive = true;
-        HttpEntity entity = new HttpEntity<>(orgView3, headers);
         String url = "/api/organization/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgView3, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задан kpp организации\"}}";
         String result = response.getBody();
@@ -223,10 +212,9 @@ public class OrgIntegrationTests {
         orgView3.kpp = "123456789";
         orgView3.phone = "89191489168";
         orgView3.isActive = true;
-        HttpEntity entity = new HttpEntity<>(orgView3, headers);
         String url = "/api/organization/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgView3, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задан адрес организации\"}}";
         String result = response.getBody();
@@ -247,8 +235,8 @@ public class OrgIntegrationTests {
         orgView.kpp = "123456789";
         orgView.phone = "89191489168";
         orgView.isActive = true;
-        service.add(orgView);
-        long updId = dao.loadByName("Organization name").getId();
+        saveTestEntity(orgView);
+        long updId = findTestEntity("Organization name");
 
         OrganizationView orgUpdView = new OrganizationView();
         orgUpdView.name = "Organization1 name";
@@ -259,21 +247,12 @@ public class OrgIntegrationTests {
         orgUpdView.id = updId;
 
         String url = "/api/organization/update";
-        HttpEntity entity = new HttpEntity<>(orgUpdView, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgUpdView, String.class);
 
         String expected = "{\"data\":{\"result\":\"success\"}}";
         String result = response.getBody();
         assertThat(result, is(expected));
-        Organization updatedOrg = dao.loadById(updId);
-        assertEquals(updatedOrg.getName(), orgUpdView.name);
-        assertEquals(updatedOrg.getFullName(), orgUpdView.fullName);
-        assertEquals(updatedOrg.getInn(), orgUpdView.inn);
-        assertEquals(updatedOrg.getKpp(), orgUpdView.kpp);
-        assertEquals(updatedOrg.getPhone(), orgView.phone);
-        assertEquals(updatedOrg.getAddress(), orgUpdView.address);
-        assertEquals(updatedOrg.getIsActive(), orgView.isActive);
     }
 
     /**
@@ -290,9 +269,8 @@ public class OrgIntegrationTests {
         orgUpdView.kpp = "123456787";
 
         String url = "/api/organization/update";
-        HttpEntity entity = new HttpEntity<>(orgUpdView, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgUpdView, String.class);
 
         String expected = "{\"error\":{\"message\":\"Невозможно обновить организацию: не задан ID\"}}";
         String result = response.getBody();
@@ -313,9 +291,8 @@ public class OrgIntegrationTests {
         orgUpdView.id = Long.valueOf(10);
 
         String url = "/api/organization/update";
-        HttpEntity entity = new HttpEntity<>(orgUpdView, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgUpdView, String.class);
 
         String expected = "{\"error\":{\"message\":\"Организации, которую вы пытаетесь обновить, нет в базе, id=10\"}}";
         String result = response.getBody();
@@ -336,8 +313,8 @@ public class OrgIntegrationTests {
         orgView.kpp = "123456789";
         orgView.phone = "89191489168";
         orgView.isActive = true;
-        service.add(orgView);
-        long id = dao.loadByName("Organization123 name").getId();
+        saveTestEntity(orgView);
+        long id = findTestEntity("Organization123 name");
 
         OrgsListInView orgListView = new OrgsListInView();
         orgListView.name = "Organization123 name";
@@ -346,8 +323,7 @@ public class OrgIntegrationTests {
 
         String url = "/api/organization/list";
 
-        HttpEntity entity = new HttpEntity<>(orgListView, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgListView, String.class);
         String expected = "{\"data\":" +
                 "[{\"id\":" + id + "," +
                 "\"name\":\"Organization123 name\"," +
@@ -369,8 +345,7 @@ public class OrgIntegrationTests {
 
         String url = "/api/organization/list";
 
-        HttpEntity entity = new HttpEntity<>(orgListView, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, orgListView, String.class);
         String expected = "{\"error\":{\"message\":\"Не задано имя организации\"}}";
         String result = response.getBody();
         assertThat(result, is(expected));

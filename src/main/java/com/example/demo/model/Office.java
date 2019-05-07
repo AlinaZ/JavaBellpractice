@@ -59,7 +59,7 @@ public class Office {
      * Действующий или ликвидирован
      */
     @Column(name = "is_active", nullable = false)
-    private boolean is_active;
+    private boolean isActive;
 
     /**
      * Организация, которой принадлжеит офис, связь с organization
@@ -84,12 +84,12 @@ public class Office {
 
     }
 
-    public Office(Organization organization, String name, String address, String phone, boolean is_active) {
+    public Office(Organization organization, String name, String address, String phone, boolean isActive) {
         this.organization = organization;
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.is_active = is_active;
+        this.isActive = isActive;
     }
 
     public Long getId() {
@@ -121,11 +121,11 @@ public class Office {
     }
 
     public boolean getIsActive() {
-        return is_active;
+        return isActive;
     }
 
     public void setIsActive(boolean is_active) {
-        this.is_active = is_active;
+        this.isActive = is_active;
     }
 
     public Organization getOrganization() {

@@ -51,6 +51,6 @@ public class UserView {
     @ApiModelProperty(value = "user's citizenship", example = "1")
     public String citizenshipCode;
 
-    @ApiModelProperty(value = "Is user's document identified?", example = "true")
+    @ApiModelProperty(value = "Is user's doctype identified?", example = "true")
     public Boolean isIdentified;
 }

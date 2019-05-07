@@ -1,12 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.DemoApplication;
-import com.example.demo.dao.office.OfficeDao;
-import com.example.demo.model.Office;
-import com.example.demo.service.office.OfficeServiceImpl;
 import com.example.demo.view.office.OfficeListInView;
 import com.example.demo.view.office.OfficeView;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,26 +16,29 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        classes = DemoApplication.class)
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 public class OfficeIntegrationTests {
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Autowired
-    private OfficeDao dao;
+    private void saveTestEntity(OfficeView view) {
+        String url = "/api/office/save";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, view, String.class);
+    }
 
-    @Autowired
-    private OfficeServiceImpl service;
+    private Long findTestEntity(String name, Long orgId) {
+        OfficeListInView offListView = new OfficeListInView();
+        offListView.name = name;
+        offListView.orgId = orgId;
 
-    private HttpHeaders headers;
-
-    @Before
-    public void init() {
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
+        String url = "/api/office/list";
+        ResponseEntity<String> response = restTemplate.postForEntity(url, offListView, String.class);
+        int idPointer = response.getBody().indexOf("id");
+        char idC = response.getBody().charAt(idPointer + 4);
+        Long id = Long.valueOf(Character.getNumericValue(idC));
+        return id;
     }
 
     /**
@@ -49,21 +47,20 @@ public class OfficeIntegrationTests {
     @Test
     public void getOfficeByIdPassTest() {
         OfficeView officeView = new OfficeView();
-        officeView.name = "Office name";
+        officeView.name = "Office7 name";
         officeView.orgId = Long.valueOf(1);
         officeView.address = "Уфа, Свердлова, 92";
         officeView.phone = "89191489168";
         officeView.isActive = true;
-        service.add(officeView);
+        saveTestEntity(officeView);
 
-        long id = dao.loadByName("Office name").getId();
+        long id = findTestEntity(officeView.name, officeView.orgId);
         String url = "/api/office/" + id;
 
-        HttpEntity entity = new HttpEntity<>(headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
         String expected = "{\"data\":" +
                 "{\"id\":" + id + "," +
-                "\"name\":\"Office name\"," +
+                "\"name\":\"Office7 name\"," +
                 "\"orgId\":1," +
                 "\"address\":\"Уфа, Свердлова, 92\"," +
                 "\"phone\":\"89191489168\"," +
@@ -79,9 +76,8 @@ public class OfficeIntegrationTests {
     @Test
     public void getOfficeByIdFailTest() {
         String url = "/api/office/10";
-        HttpEntity entity = new HttpEntity<>(headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
         String expected = "{\"error\":{\"message\":\"Нет офиса с Id=10\"}}";
         String result = response.getBody();
@@ -100,10 +96,9 @@ public class OfficeIntegrationTests {
         officeView.phone = "89191489168";
         officeView.isActive = true;
 
-        HttpEntity entity = new HttpEntity<>(officeView, headers);
         String url = "/api/office/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeView, String.class);
 
         String expected = "{\"data\":{\"result\":\"success\"}}";
         String result = response.getBody();
@@ -122,10 +117,9 @@ public class OfficeIntegrationTests {
         officeView.phone = "89191489168";
         officeView.isActive = true;
 
-        HttpEntity entity = new HttpEntity<>(officeView, headers);
         String url = "/api/office/save";
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeView, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задан идентификатор организации, которой принадлежит офис\"}}";
         String result = response.getBody();
@@ -140,13 +134,13 @@ public class OfficeIntegrationTests {
     @Test
     public void updateOfficePassTest() {
         OfficeView officeView = new OfficeView();
-        officeView.name = "Office name";
+        officeView.name = "Office name7";
         officeView.orgId = Long.valueOf(1);
         officeView.address = "Уфа, Свердлова, 92";
         officeView.phone = "89191489168";
         officeView.isActive = true;
-        service.add(officeView);
-        long updId = dao.loadByName("Office name").getId();
+        saveTestEntity(officeView);
+        long updId = findTestEntity(officeView.name, officeView.orgId);
 
         OfficeView officeView1 = new OfficeView();
         officeView1.id = updId;
@@ -154,19 +148,12 @@ public class OfficeIntegrationTests {
         officeView1.address = "Ufa, Свердлова, 92";
 
         String url = "/api/office/update";
-        HttpEntity entity = new HttpEntity<>(officeView1, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeView1, String.class);
 
         String expected = "{\"data\":{\"result\":\"success\"}}";
         String result = response.getBody();
         assertThat(result, is(expected));
-        Office updatedOffice = dao.loadById(updId);
-        assertEquals(updatedOffice.getName(), officeView1.name);
-        assertEquals(updatedOffice.getOrganization().getId(), officeView.orgId);
-        assertEquals(updatedOffice.getAddress(), officeView1.address);
-        assertEquals(updatedOffice.getPhone(), officeView.phone);
-        assertEquals(updatedOffice.getIsActive(), officeView.isActive);
     }
 
     /**
@@ -181,9 +168,8 @@ public class OfficeIntegrationTests {
         officeView1.address = "Ufa, Свердлова, 92";
 
         String url = "/api/office/update";
-        HttpEntity entity = new HttpEntity<>(officeView1, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeView1, String.class);
 
         String expected = "{\"error\":{\"message\":\"Невозможно обновить офис: не задан ID\"}}";
         String result = response.getBody();
@@ -202,9 +188,8 @@ public class OfficeIntegrationTests {
         officeView1.address = "Ufa, Свердлова, 92";
 
         String url = "/api/office/update";
-        HttpEntity entity = new HttpEntity<>(officeView1, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeView1, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задано название офиса\"}}";
         String result = response.getBody();
@@ -223,9 +208,8 @@ public class OfficeIntegrationTests {
         officeView1.address = null;
 
         String url = "/api/office/update";
-        HttpEntity entity = new HttpEntity<>(officeView1, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeView1, String.class);
 
         String expected = "{\"error\":{\"message\":\"Не задан адрес офиса\"}}";
         String result = response.getBody();
@@ -244,9 +228,8 @@ public class OfficeIntegrationTests {
         officeView1.address = "Ufa, Свердлова, 92";
 
         String url = "/api/office/update";
-        HttpEntity entity = new HttpEntity<>(officeView1, headers);
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeView1, String.class);
 
         String expected = "{\"error\":{\"message\":\"Офиса, который вы пытаетесь обновить, нет в базе, id=10\"}}";
         String result = response.getBody();
@@ -265,8 +248,8 @@ public class OfficeIntegrationTests {
         officeView.address = "Уфа, Свердлова, 921";
         officeView.phone = "79191489168";
         officeView.isActive = true;
-        service.add(officeView);
-        long id = dao.loadByName("Office123 name").getId();
+        saveTestEntity(officeView);
+        long id = findTestEntity(officeView.name, officeView.orgId);
 
         OfficeListInView officeListView = new OfficeListInView();
         officeListView.orgId = Long.valueOf(1);
@@ -276,8 +259,7 @@ public class OfficeIntegrationTests {
 
         String url = "/api/office/list";
 
-        HttpEntity entity = new HttpEntity<>(officeListView, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeListView, String.class);
         String expected = "{\"data\":" +
                 "[{\"id\":" + id + "," +
                 "\"name\":\"Office123 name\"," +
@@ -300,8 +282,7 @@ public class OfficeIntegrationTests {
 
         String url = "/api/office/list";
 
-        HttpEntity entity = new HttpEntity<>(officeListView, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, officeListView, String.class);
         String expected = "{\"error\":{\"message\":\"Не задано Id организации,котрой принадлежат офисы\"}}";
         String result = response.getBody();
         assertThat(result, is(expected));

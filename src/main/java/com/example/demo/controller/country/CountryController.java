@@ -24,7 +24,7 @@ public class CountryController {
     }
 
     @ApiOperation(value = "Получить список всех стран", httpMethod = "GET")
-    @GetMapping("/list")
+    @GetMapping("/")
     public List<CountryView> countries() {
         return countryService.countries();
     }
