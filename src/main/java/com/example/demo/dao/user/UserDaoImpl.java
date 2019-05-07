@@ -45,4 +45,22 @@ public class UserDaoImpl implements UserDao {
     public void save(User user) {
         em.persist(user);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(User user, Long id)  {
+        User originalUser=em.find(User.class,id);
+        originalUser.setFirstName(user.getFirstName());
+        originalUser.setLastName(user.getLastName());
+        originalUser.setMiddleName(user.getMiddleName());
+        originalUser.setPosition(user.getPosition());
+        originalUser.setOffice(user.getOffice());
+        originalUser.setCountry(user.getCountry());
+        originalUser.setDocument(user.getDocument());
+        originalUser.setPhone(user.getPhone());
+        originalUser.setIsIdentified(user.getIsIdentified());
+        em.flush();
+    }
 }

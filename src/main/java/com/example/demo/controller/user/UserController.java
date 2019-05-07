@@ -1,27 +1,78 @@
 package com.example.demo.controller.user;
 
-//import io.swagger.annotations.ApiOperation;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.user.UserService;
+import com.example.demo.view.user.UserView;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import java.util.List;
 
-@Validated
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+@Api(value="UserController", description="Управляет информацией об организациях")
 @RestController
-//@RequestMapping(value = "/", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/user", produces = APPLICATION_JSON_VALUE)
 
 public class UserController {
 
-    // @ApiOperation("Проверка доступности приложения")
-    @RequestMapping(value = "/user", method = {GET, POST})
-    public String ping() {
-        return "pong";
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-   /* @GetMapping("/test/{test}")
-    public String test(@PathVariable @Size(min = 5, max = 100) String test) {
-        return "OK";
-    }*/
+    /**
+     * Получить список всех сотрудников
+     * @return
+     */
+    @ApiOperation(value = "Получить список всех сотрудников", httpMethod = "GET")
+    @GetMapping("/list")
+    public List<UserView> users() {
+        return userService.users();
+    }
+
+    /**
+     * Получить сотрудника по Id
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "Получить сотрудника по Id", httpMethod = "GET")
+    @GetMapping(value = "/{id}", headers = "Accept=application/json")
+    public UserView getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
+    }
+
+    /**
+     * Обновить существующ сотрудника (по Id)
+     *
+     * @param user
+     * @param id
+     */
+    @ApiOperation(value = "Обновить офис по Id", httpMethod = "POST")
+    @PostMapping(value = "/{id}", headers = "Accept=application/json")
+    public void updateUserById(@RequestBody UserView user, @PathVariable Long id) {
+        userService.update(user, id);
+    }
+
+    /**
+     * Добавить нового сотрудника
+     *
+     * @param user
+     */
+    @ApiOperation(value = "Добавить нового сотрудника", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success", response = String.class),
+            @ApiResponse(code = 404, message = "Not Found"),
+            @ApiResponse(code = 500, message = "Failure")})
+    @PostMapping("/save")
+    public void addNewOrg(@RequestBody UserView user) {
+        userService.add(user);
+    }
 }

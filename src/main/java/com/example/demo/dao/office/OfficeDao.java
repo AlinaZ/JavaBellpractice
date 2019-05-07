@@ -29,4 +29,12 @@ public interface OfficeDao {
      * @param office
      */
     void save(Office office);
+
+    /**
+     * Обновить Office  по идентификатору
+     * @param office
+     * @param id
+     */
+    void update (Office office, Long id);
+
 }

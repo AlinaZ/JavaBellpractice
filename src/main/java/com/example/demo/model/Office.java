@@ -38,6 +38,13 @@ public class Office {
     private Integer version;
 
     /**
+     * Название офиса
+     */
+
+    @Column(name = "name", length = 50, nullable = false)
+    private String name;
+
+    /**
      * Адрес офиса
      */
     @Column(name = "address", length = 250, nullable = false)
@@ -63,6 +70,8 @@ public class Office {
     @JoinColumn(name="org_id")
     private Organization organization;
 
+   /* private Long orgIg=organization.getId(); */
+
     /**
      * Сотрудники офиса, связь с users
      */
@@ -78,8 +87,9 @@ public class Office {
 
     }
 
-    public Office(Organization organization, String address, String phone, boolean is_active) {
+    public Office(Organization organization, String name,String address, String phone, boolean is_active) {
         this.organization = organization;
+        this.name=name;
         this.address=address;
         this.phone=phone;
         this.is_active = is_active;
@@ -97,6 +107,8 @@ public class Office {
      * address getter
      * @return address
      */
+    public String getName(){return name;}
+    public void setName(String name) {this.name=name;}
 
     public String getAddress() { return address; }
 

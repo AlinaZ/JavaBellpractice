@@ -29,4 +29,11 @@ public interface OrganizationDao {
      * @param organization
      */
     void save(Organization organization);
+
+    /**
+     * Обновить организацию по Id
+     * @param organization
+     * @param id
+     */
+    void update(Organization organization,Long id);
 }

@@ -1,5 +1,6 @@
 package com.example.demo.service.organization;
 
+import com.example.demo.model.Organization;
 import com.example.demo.view.organization.OrganizationView;
 import org.springframework.validation.annotation.Validated;
 
@@ -22,7 +23,22 @@ public interface OrganizationService {
     /**
      * Получить список organizations
      *
-     * @return {@Person}
+     * @return {@Organization}
      */
     List<OrganizationView> organizations();
+
+    /**
+     * Получить организацию по идентификатору
+     * @param id
+     * @return
+     */
+    OrganizationView getOrgById(Long id);
+
+    /**
+     * Обновить организацию по идентификатору
+     * @param organization
+     * @param id
+     */
+    void update(@Valid OrganizationView organization,Long id);
+
 }

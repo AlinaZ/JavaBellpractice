@@ -1,8 +1,8 @@
-INSERT INTO Organization (id, version, name, full_name, inn, kpp, address, phone, is_active) VALUES (1, 0, 'АО "Белл-Интегратор"', 'Акционерное общество "Белл-Интегратор"', '7733180847','502401001','Г МОСКВА,УЛ МИТИНСКАЯ, Д 52, КОРП 1','8(495)913-22-62',true);
+INSERT INTO Organization (id, version, name, full_name, inn, kpp, address, phone, is_active) VALUES (1, 0, 'АО "Белл-Интегратор"', 'Акционерное общество "Белл-Интегратор"', '7733180847','502401001','Г МОСКВА,УЛ МИТИНСКАЯ, Д 52, КОРП 1','8(495)913-22-62',1);
 
-INSERT INTO Office (id, version, org_id, address, phone, is_active) VALUES (1, 0, 1, 'ул. Свердлова, 92, 1, 3 этаж, Уфа, Респ. Башкортостан', '8(347)222–86–30',true);
-INSERT INTO Office (id, version, org_id, address, phone, is_active) VALUES (2, 0, 1, 'ул. Московская,27, 6 этаж, ТОЦ Новый Арбат, Пенза, Пензенская обл', '8(841)220-15-98',true);
-INSERT INTO Office (id, version, org_id, address, phone, is_active) VALUES (3, 0, 1, 'ул. Московская, 84, Саратов, Саратовская обл.', '8(8452)65-94-83',true);
+INSERT INTO Office (id, version, org_id, name, address, phone, is_active) VALUES (1, 0, 1, 'Офис в Уфе','ул. Свердлова, 92, 1, 3 этаж, Уфа, Респ. Башкортостан', '8(347)222–86–30',true);
+INSERT INTO Office (id, version, org_id, name,address, phone, is_active) VALUES (2, 0, 1, 'Офис в Пензе','ул. Московская,27, 6 этаж, ТОЦ Новый Арбат, Пенза, Пензенская обл', '8(841)220-15-98',true);
+INSERT INTO Office (id, version, org_id, name, address, phone, is_active) VALUES (3, 0, 1, 'Офис в Москве', 'ул. Московская, 84, Саратов, Саратовская обл.', '8(8452)65-94-83',true);
 
 INSERT INTO Doc_type (id, version, name, code) VALUES (1, 0, 'Свидетельство о рождении', '03');
 INSERT INTO Doc_type (id, version, name, code) VALUES (2, 0, 'Военный билет', '07');

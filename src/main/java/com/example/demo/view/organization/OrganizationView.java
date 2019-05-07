@@ -1,9 +1,11 @@
 package com.example.demo.view.organization;
 
+import com.example.demo.model.Office;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.*;
+import java.util.Set;
 
 @ApiModel(description = "organizations")
 public class OrganizationView {
@@ -46,8 +48,14 @@ public class OrganizationView {
     @ApiModelProperty(value = "Is organization active?", example = "1")
     public boolean isActive;
 
+
+  /*  @ApiModelProperty(value = "Is organization active?", example = "1")
+    public Set<Office> offices; */
+
+
+
     @Override
     public String toString() {
-        return "{id:" + id + "\n"+";name:" + name + "\n"+";full_name:" + fullName + "\n"+ ";inn:" + inn + "\n"+";kpp:" + kpp +"\n"+";address:" + address+"\n"+";phone:" + phone+"\n"+";is_active:" + isActive+"}";
+        return "{i1d:" + id + "\n"+";name:" + name + "\n"+";full_name:" + fullName + "\n"+ ";inn:" + inn + "\n"+";kpp:" + kpp +"\n"+";address:" + address+"\n"+";phone:" + phone+"\n"+";is_active:" + isActive+"}";
     }
 }

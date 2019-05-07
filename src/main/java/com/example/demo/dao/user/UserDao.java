@@ -29,4 +29,11 @@ public interface UserDao {
      * @param user
      */
     void save(User user);
+
+    /**
+     * Обновить User  по идентификатору
+     * @param user
+     * @param id
+     */
+    void update (User user, Long id);
 }

@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Id;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -74,6 +76,7 @@ public class Organization {
      * Действующая или ликвидирована
      */
     @Column(name = "is_active", nullable = false)
+    //@Type(type="boolean")
     private boolean isActive;
 
 

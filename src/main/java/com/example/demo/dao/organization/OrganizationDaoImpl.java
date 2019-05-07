@@ -45,4 +45,21 @@ public class OrganizationDaoImpl implements OrganizationDao {
     public void save(Organization organization) {
         em.persist(organization);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(Organization organization, Long id)  {
+        Organization originalOrg=em.find(Organization.class,id);
+        originalOrg.setName(organization.getName());
+        originalOrg.setFull_name(organization.getFullName());
+        originalOrg.setInn(organization.getInn());
+        originalOrg.setKpp(organization.getKpp());
+        originalOrg.setAddress(organization.getAddress());
+        originalOrg.setPhone(organization.getPhone());
+        originalOrg.setIsActive(organization.getIs_active());
+        em.flush();
+    }
+
 }

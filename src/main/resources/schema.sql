@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS Office (
     id         INTEGER               COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
     version    INTEGER      NOT NULL COMMENT 'Служебное поле hibernate',
     org_id     INTEGER      NOT NULL COMMENT 'Уникальный идентификатор организации, которой принадлежит офис',
+    name       VARCHAR(50)  NOT NULL COMMENT 'Имя офиса',
     address    VARCHAR(250) NOT NULL COMMENT 'Адрес офиса',
     phone      VARCHAR(20)  NOT NULL COMMENT 'телефон офиса',
     is_active   BOOLEAN               COMMENT 'офис действующий или ликвидирован',

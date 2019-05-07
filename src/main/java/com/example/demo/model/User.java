@@ -179,8 +179,9 @@ public class User {
      * get user's phone
      * @return phone
      */
-
-    public String getPhone() { return phone; }
+   public String getPosition(){return position;}
+   public void setPosition(String position) {this.position=position;}
+   public String getPhone() { return phone; }
 
     /**
      * set user's phone
