@@ -1,6 +1,6 @@
-Учебный проект курсов от Bell Integrator 
+<b>Учебный проект курсов от Bell Integrator</b>
 
-Spring MVC + Hibernate RESTful CRUD API
+<b>Spring MVC + Hibernate RESTful CRUD API</b>
 
 Задание:
 
